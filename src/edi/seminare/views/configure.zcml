@@ -7,6 +7,14 @@
   -*- extra stuff goes here -*-
 
   <browser:page
+    name="seminarliste"
+    for="Products.CMFCore.interfaces.IFolderish"
+    class=".seminarliste.Seminarliste"
+    template="seminarliste.pt"
+    permission="zope2.View"
+    />
+
+  <browser:page
     name="terminliste"
     for="Products.CMFCore.interfaces.IFolderish"
     class=".terminliste.Terminliste"
