@@ -1,0 +1,5 @@
+============
+edi.seminare
+============
+
+User documentation
