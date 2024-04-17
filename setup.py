@@ -56,6 +56,7 @@ setup(
         'plone.app.relationfield',
         'plone.app.lockingbehavior',
         'plone.schema',
+        'collective.z3cform.datagridfield',
     ],
     extras_require={
         'test': [
