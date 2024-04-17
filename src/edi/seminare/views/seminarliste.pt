@@ -6,8 +6,39 @@
       metal:use-macro="context/main_template/macros/master">
 <body>
   <metal:block fill-slot="content-core">
-      <h2 i18n:translate="">Sample View</h2>
-      <p tal:content="view/msg">this gets replaced</p>
+
+  <tal:variables tal:define="icons python:context.restrictedTraverse('@@iconresolver');">
+
+  <table class="table" tal:define="seminarliste view/seminare">
+    <thead>
+      <th>Weiterbildungsangebot</th>
+      <th>Termine und freie Plätze</th>
+    </thead>
+    <tbody class="table-group-divider">
+      <tr tal:repeat="seminar seminarliste">
+        <td><a href="${seminar/url}">${seminar/title}</a></td>
+        <td>
+          <ul tal:define="list_of_dates seminar/list_of_dates" class="list-group list-group-flush">
+            <!--<li class="list-group-item" tal:repeat="date list_of_dates">
+              ${date/ort} ${date/zeit} ${date/places}
+            </li>-->
+            <li tal:repeat="date list_of_dates" 
+                class="list-group-item d-flex justify-content-between align-items-start">
+              <div class="ms-2 me-auto">
+                <div class="fw-bold">${date/ort}</div>
+                  <span><tal:icon tal:replace="structure python:icons.tag('plone-calendar', tag_class='me-1')" />
+                    ${date/zeit/day}</span>
+                  <span class="p-4"><tal:icon tal:replace="structure python:icons.tag('plone-clock', tag_class='me-1')" />
+                    ${date/zeit/time}</span>
+              </div>
+              <span class="badge text-bg-${date/places/class} text-white rounded-pill">${date/places/number}</span>
+            </li>
+
+          </ul>
+        </td>
+      </tr>
+    </tbody>
+  </table>
   </metal:block>
 </body>
 </html>
