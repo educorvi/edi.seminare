@@ -32,7 +32,7 @@ class ISeminartermin(model.Schema):
     start = schema.Datetime(title="Beginn der Veranstaltung", required=True)
     end = schema.Datetime(title=u"Ende der Veranstaltung", required=True)
     location = schema.TextLine(title=u"Ort der Veranstaltung", required=True)
-    places = schema.Int(title="Verfügbare Plätze",
+    places = schema.TextLine(title="Verfügbare Plätze",
         description="-1 = ausgebucht, 0 = Warteliste, 1000 = freie Plätze, 1-999 = Anzahl der freien Plätze",
         required=True)
 
