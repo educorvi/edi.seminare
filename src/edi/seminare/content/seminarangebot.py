@@ -94,6 +94,10 @@ class ISeminarangebot(model.Schema):
     directives.widget('seminartermine',
         DataGridFieldFactory)
 
+    endtext = RichText(title = "Schlusstext zum Seminarangebot",
+        description = "Der Text wird unterhalb der Seminardaten angezeigt.",
+        required=False)
+
 
 @implementer(ISeminarangebot)
 class Seminarangebot(Container):
