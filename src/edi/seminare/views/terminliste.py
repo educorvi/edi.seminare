@@ -2,16 +2,20 @@
 
 from edi.seminare import _
 from Products.Five.browser import BrowserView
-
-# from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-
+from edi.seminare.views.seminarliste import format_seminartermine
+from plone import api
 
 class Terminliste(BrowserView):
-    # If you want to define a template here, please remove the template from
-    # the configure.zcml registration of this view.
-    # template = ViewPageTemplateFile('terminliste.pt')
 
     def __call__(self):
-        # Implement your own actions:
-        self.msg = _(u'A small message')
+        seminare = api.content.find(context=self.context, portal_type="Seminarangebot")
+        formatted_termine = []
+        for seminar in seminare:
+            seminarobj = seminar.getObject()
+            terminliste = format_seminartermine(seminarobj.seminartermine)
+            for termin in terminliste:
+                termin['title'] = seminarobj.title
+                termin['url'] = seminarobj.absolute_url()
+                formatted_termine.append(termin)
+        self.seminartermine = formatted_termine.sort(key=lambda x: x["start"])
         return self.index()

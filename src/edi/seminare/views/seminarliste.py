@@ -5,6 +5,7 @@ from Products.Five.browser import BrowserView
 from plone import api
 
 def format_plaetze(places):
+    """Helper Function to format free places for seminar"""
     erg = 'Fehler'
     try:
         int(places)
@@ -26,12 +27,15 @@ def format_plaetze(places):
     return {'number':erg, 'class': erg_class}
 
 def format_seminartermine(seminartermine):
+    """Helper Function to make datetime-objects human readable in seminarevent context"""
     formatted_events = []
     for termin in seminartermine:
         event = {}
         event['ort'] = termin['location']
         start = datetime.strptime(termin['start'], '%Y-%m-%dT%H:%M')
+        event['start'] = start
         end = datetime.strptime(termin['end'], '%Y-%m-%dT%H:%M')
+        event['end'] = end
         if start.day == end.day:
             formatted_day = start.strftime('%d.%m.%Y')
             formatted_time = start.strftime('%H:%M-') + end.strftime('%H:%M Uhr')
