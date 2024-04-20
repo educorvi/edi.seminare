@@ -7,11 +7,58 @@
 <body>
   <metal:block fill-slot="content-core">
     <tal:variables tal:define="icons python:context.restrictedTraverse('@@iconresolver');">
-    <div class="container-fluid">
       <div class="row">
         <div class="col-12 col-sm-9">
 
           <div class="mb-4" tal:condition="context/text" tal:content="structure context/text/output"/>
+
+          <h2 tal:condition="python: context.verweis or context.link">Weitere Informationen zum Seminar</h2>
+
+          <section class="mb-4 border-bottom">
+
+            <p tal:condition="context/verweis">
+              <a tal:attributes="href python:context.verweis.to_object.absolute_url()"
+                 tal:content="python:context.verweis.to_object.title"></a>
+            </p>
+            <p tal:condition="context/link">
+              <a target="_blank" href="${context/link}">${context/link}</a>
+            </p>
+
+            <p tal:condition="python: context.anmeldung=='keine'" class="h3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"/>
+  <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+</svg>
+              <strong>Für eine Teilnahme ist keine Anmeldung erforderlich</strong>
+            </p>
+
+            <p tal:condition="python: context.anmeldung=='email'" class="h3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"/>
+  <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+</svg>
+              Anmeldung bitte per E-Mail: <a href="mailto:${context/email}">${context/email}</a>
+            </p>
+
+            <p tal:condition="python: context.anmeldung=='telefon'" class="h3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"/>
+  <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+</svg>
+              Anmeldung bitte per Telefon: <a href="tel:${context/telefon}">${context/telefon}</a>
+            </p>
+
+            <p tal:condition="python: context.anmeldung=='link'" class="h3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"/>
+  <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+</svg>
+              Anmeldung bitte per Online-Formular: <a tal:condition="context/formular" 
+              tal:attributes="href python: context.formular.to_object.absolute_url()"
+              tal:content="python:context.formular.to_object.title"></a>
+            </p>
+
+          </section>
 
           <h2>Alle Termine für dieses Seminar</h2>
 
@@ -42,6 +89,7 @@
               <p class="card-text"><strong>${context/kontakt}</strong></p>
               <ul class="list-group list-group-flush">
               <li tal:condition="context/email" class="list-group-item">
+                <tal:icon tal:replace="structure python:icons.tag('plone-mail', tag_class='me-1')" />
                 <a href="mailto:${context/email}" class="card-link" style="font-size: 14pt;">${context/email}</a>
               </li>
               <li tal:condition="context/telefon" class="list-group-item">
@@ -56,7 +104,6 @@
           
       </div><!--row-->
 
-    </div><!--container-->
     
   </metal:block>
 </body>

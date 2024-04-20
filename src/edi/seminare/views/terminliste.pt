@@ -9,24 +9,35 @@
 
     <tal:variables tal:define="icons python:context.restrictedTraverse('@@iconresolver');">
 
+    <div tal:repeat="group python:view.seminartermine.items()">
+    <h2 tal:define="key python:group[0]" tal:content="python: str(view.get_month(key[1]))+' '+str(key[0])"></h2>
+
     <table class="table">
       <thead>
         <tr>
-          <th scope="col">Termine</th>
+          <th scope="col">Datum</th>
+          <th scope="col">Beginn/Ende</th>
           <th scope="col">Ort</th>
           <th scope="col">Seminar</th>
           <th scope="col">freie Plätze</th>
         </tr>
       </thead>
       <tbody class="table-group-divider">
-        <tr>
-          <td scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
+        <tr tal:repeat="seminartermin python:group[1]">
+          <td scope="row">
+            <span><tal:icon tal:replace="structure python:icons.tag('plone-calendar', tag_class='me-1')" />${seminartermin/zeit/day}</span>
+          </td>
+          <td>
+            <span><tal:icon tal:replace="structure python:icons.tag('plone-clock', tag_class='me-1')" />${seminartermin/zeit/time}</span>
+          </td>
+          <td>${seminartermin/ort}</td>
+          <td><a href="${seminartermin/url}">${seminartermin/title}</td>
+          <td><span class="badge text-bg-${seminartermin/places/class} text-white rounded-pill">${seminartermin/places/number}</span>
+          </td>
         </tr>
       </tbody>
     </table>
+    </div>
   </metal:block>
 </body>
 </html>

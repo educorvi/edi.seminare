@@ -2,8 +2,10 @@
 
 from edi.seminare import _
 from Products.Five.browser import BrowserView
-from edi.seminare.views.seminarliste import format_seminartermine
+from edi.seminare.views.seminarliste import format_seminartermine, get_monthname
 from plone import api
+from datetime import datetime
+from itertools import groupby
 
 class Terminliste(BrowserView):
 
@@ -38,5 +40,14 @@ class Terminliste(BrowserView):
                 termin['title'] = seminarobj.title
                 termin['url'] = seminarobj.absolute_url()
                 formatted_termine.append(termin)
-        self.seminartermine = formatted_termine.sort(key=lambda x: x["start"])
+        formatted_termine.sort(key=lambda x: x["start"])
+        now = datetime.now()
+        formatted_termine = [termin for termin in formatted_termine if termin['end'] > now]
+        grouped_events = {}
+        for key, group in groupby(formatted_termine, key=lambda x: (x["start"].year, x["start"].month)):
+            grouped_events[key] = list(group)
+        self.seminartermine = grouped_events
         return self.index()
+
+    def get_month(self, number):
+        return get_monthname(number)
