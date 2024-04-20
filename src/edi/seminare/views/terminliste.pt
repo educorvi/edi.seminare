@@ -6,8 +6,27 @@
       metal:use-macro="context/main_template/macros/master">
 <body>
   <metal:block fill-slot="content-core">
-      <h2 i18n:translate="">Sample View</h2>
-      <p tal:content="view/msg">this gets replaced</p>
+
+    <tal:variables tal:define="icons python:context.restrictedTraverse('@@iconresolver');">
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Termine</th>
+          <th scope="col">Ort</th>
+          <th scope="col">Seminar</th>
+          <th scope="col">freie Plätze</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        <tr>
+          <td scope="row">1</th>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>@mdo</td>
+        </tr>
+      </tbody>
+    </table>
   </metal:block>
 </body>
 </html>
