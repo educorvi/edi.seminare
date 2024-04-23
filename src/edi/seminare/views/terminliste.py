@@ -40,9 +40,6 @@ class Terminliste(BrowserView):
                 termin['title'] = seminarobj.title
                 termin['url'] = seminarobj.absolute_url()
                 formatted_termine.append(termin)
-        formatted_termine.sort(key=lambda x: x["start"])
-        now = datetime.now()
-        formatted_termine = [termin for termin in formatted_termine if termin['end'] > now]
         grouped_events = {}
         for key, group in groupby(formatted_termine, key=lambda x: (x["start"].year, x["start"].month)):
             grouped_events[key] = list(group)

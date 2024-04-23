@@ -3,6 +3,7 @@ from datetime import datetime
 from edi.seminare import _
 from Products.Five.browser import BrowserView
 from plone import api
+from datetime import datetime
 
 def format_plaetze(places):
     """Helper Function to format free places for seminar"""
@@ -38,13 +39,16 @@ def format_seminartermine(seminartermine):
         event['end'] = end
         if start.day == end.day:
             formatted_day = start.strftime('%d.%m.%Y')
-            formatted_time = start.strftime('%H:%M-') + end.strftime('%H:%M Uhr')
+            formatted_time = start.strftime('%H:%M-') + end.strftime('%H:%M')
         else:
             formatted_day = start.strftime('%d.%m.-') + end.strftime('%d.%m.%Y')
-            formatted_time = start.strftime('%H:%M-') + start.strftime('%H:%M Uhr')
+            formatted_time = start.strftime('%H:%M-') + start.strftime('%H:%M')
         event['zeit'] = {'day':formatted_day, 'time':formatted_time}
         event['places'] = format_plaetze(termin['places'])
         formatted_events.append(event)
+    formatted_events.sort(key=lambda x: x["start"])
+    now = datetime.now()
+    formatted_events = [termin for termin in formatted_events if termin['end'] > now]
     return formatted_events
 
 def get_monthname(monthnumber):

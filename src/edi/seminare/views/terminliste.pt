@@ -5,39 +5,75 @@
       i18n:domain="edi.seminare"
       metal:use-macro="context/main_template/macros/master">
 <body>
-  <metal:block fill-slot="content-core">
+  <metal:main fill-slot="main">
+    <tal:main-macro metal:define-macro="main">
+      <tal:variables tal:define="icons python:context.restrictedTraverse('@@iconresolver');">
 
-    <tal:variables tal:define="icons python:context.restrictedTraverse('@@iconresolver');">
+        <div class="container">
 
-    <div tal:repeat="group python:view.seminartermine.items()">
-    <h2 tal:define="key python:group[0]" tal:content="python: str(view.get_month(key[1]))+' '+str(key[0])"></h2>
+          <div class="row">
 
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Datum</th>
-          <th scope="col">Beginn/Ende</th>
-          <th scope="col">Ort</th>
-          <th scope="col">Seminar</th>
-          <th scope="col">freie Plätze</th>
-        </tr>
-      </thead>
-      <tbody class="table-group-divider">
-        <tr tal:repeat="seminartermin python:group[1]">
-          <td scope="row">
-            <span><tal:icon tal:replace="structure python:icons.tag('plone-calendar', tag_class='me-1')" />${seminartermin/zeit/day}</span>
-          </td>
-          <td>
-            <span><tal:icon tal:replace="structure python:icons.tag('plone-clock', tag_class='me-1')" />${seminartermin/zeit/time}</span>
-          </td>
-          <td>${seminartermin/ort}</td>
-          <td><a href="${seminartermin/url}">${seminartermin/title}</td>
-          <td><span class="badge text-bg-${seminartermin/places/class} text-white rounded-pill">${seminartermin/places/number}</span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    </div>
-  </metal:block>
+            <div class="col-12 col-sm-9">
+
+              <h1 tal:content="context/title"/>
+              <span tal:content="structure provider:plone.belowcontenttitle" />
+              <p tal:condition="context/description" class="lead mt-5">
+                <span class="dot">
+                  <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+                    <defs></defs>
+                    <circle cx="250" cy="250" r="250" fill="#0063af"></circle>
+                  </svg>
+                </span>
+                <span tal:replace="context/description"/>
+              </p>
+
+              <div class="mb-4" tal:condition="context/text|nothing" tal:content="structure context/text/output"/>
+
+              <div tal:repeat="group python:view.seminartermine.items()">
+
+                <h2 tal:define="key python:group[0]" tal:content="python: str(view.get_month(key[1]))+' '+str(key[0])"></h2>
+
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Datum</th>
+                      <th scope="col">Beginn/Ende</th>
+                      <th scope="col">Ort</th>
+                      <th scope="col">Veranstaltung</th>
+                      <th scope="col">freie Plätze</th>
+                    </tr>
+                  </thead>
+                  <tbody class="table-group-divider">
+                    <tr tal:repeat="seminartermin python:group[1]">
+                      <td scope="row">
+                        ${seminartermin/zeit/day}
+                      </td>
+                      <td>
+                        ${seminartermin/zeit/time}&nbsp;Uhr
+                      </td>
+                      <td>${seminartermin/ort}</td>
+                      <td><a href="${seminartermin/url}">${seminartermin/title}</td>
+                      <td><span class="badge text-bg-${seminartermin/places/class} text-white rounded-pill">${seminartermin/places/number}</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+              </div><!-- Iterator Seminartermine -->
+
+              <div class="mb-4" tal:condition="context/schlusstext|nothing" tal:content="structure context/schlusstext/output"/>              
+
+            </div><!-- col -->
+
+            <div class="col-12 col-sm-3">
+              <div tal:replace="structure context/@@portlet-cards-view"/>
+            </div><!-- col -->
+
+          </div><!-- row -->
+        </div><!-- container -->
+
+      </tal:variables>
+    </tal:main-macro>
+  </metal:main>
 </body>
 </html>

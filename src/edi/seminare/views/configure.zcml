@@ -7,6 +7,14 @@
   -*- extra stuff goes here -*-
 
   <browser:page
+    name="seminarkarten"
+    for="Products.CMFCore.interfaces.IFolderish"
+    class=".seminarkarten.Seminarkarten"
+    template="seminarkarten.pt"
+    permission="zope2.View"
+    />
+
+  <browser:page
     name="seminarliste"
     for="Products.CMFCore.interfaces.IFolderish"
     class=".seminarliste.Seminarliste"
@@ -24,7 +32,7 @@
 
   <browser:page
     name="seminarangebot"
-    for="Products.CMFCore.interfaces.IFolderish"
+    for="edi.seminare.content.seminarangebot.ISeminarangebot"
     class=".seminarangebot.Seminarangebot"
     template="seminarangebot.pt"
     permission="zope2.View"
