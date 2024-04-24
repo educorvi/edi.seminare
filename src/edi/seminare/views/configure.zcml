@@ -53,7 +53,7 @@
      />
      <browser:menuItem
        title="Seminare nach Unterordnern"
-       action="abc-title"
+       action="seminarkarten"
        description="ABC-Ansicht fuer Plone"
      />
   </browser:menuItems>
