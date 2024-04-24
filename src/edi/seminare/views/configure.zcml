@@ -38,5 +38,25 @@
     permission="zope2.View"
     />
 
+  <browser:menuItems
+     for="*"
+     menu="plone_displayviews">
+     <browser:menuItem
+       title="Seminare nach Themen"
+       action="seminarliste"
+       description="ABC-Ansicht fuer Plone"
+     />
+     <browser:menuItem
+       title="Seminare nach Terminen"
+       action="terminliste"
+       description="ABC-Ansicht fuer Plone"
+     />
+     <browser:menuItem
+       title="Seminare nach Unterordnern"
+       action="abc-title"
+       description="ABC-Ansicht fuer Plone"
+     />
+  </browser:menuItems>
+
 
 </configure>

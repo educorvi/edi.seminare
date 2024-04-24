@@ -69,7 +69,7 @@ def get_monthname(monthnumber):
 class Seminarliste(BrowserView):
 
     def __call__(self):
-        seminare = api.content.find(context=self.context, portal_type="Seminarangebot")
+        seminare = [x for x in self.context.getFolderContents() if x.portal_type == 'Seminarangebot']
         formatted_seminare = []
         for seminar in seminare:
             seminarevent = {}

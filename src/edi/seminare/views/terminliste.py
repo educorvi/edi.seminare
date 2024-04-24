@@ -9,6 +9,22 @@ from itertools import groupby
 
 class Terminliste(BrowserView):
 
+    def query_seminare(self, obj=None):
+        context = self.context
+        if obj:
+            context=obj
+        seminare = api.content.find(context=context, portal_type="Seminarangebot")
+        formatted_termine = []
+        for seminar in seminare:
+            seminarobj = seminar.getObject()
+            terminliste = format_seminartermine(seminarobj.seminartermine)
+            for termin in terminliste:
+                termin['title'] = seminarobj.title
+                termin['url'] = seminarobj.absolute_url()
+                formatted_termine.append(termin)
+        formatted_termine.sort(key=lambda x: x["start"])
+        return formatted_termine
+
     def __call__(self):
         """
         Es wird eine Liste "self.seminartermine" zurückgegeben
@@ -31,15 +47,7 @@ class Terminliste(BrowserView):
           'places':'Anzeige der freien Plätze'
         ]
         """
-        seminare = api.content.find(context=self.context, portal_type="Seminarangebot")
-        formatted_termine = []
-        for seminar in seminare:
-            seminarobj = seminar.getObject()
-            terminliste = format_seminartermine(seminarobj.seminartermine)
-            for termin in terminliste:
-                termin['title'] = seminarobj.title
-                termin['url'] = seminarobj.absolute_url()
-                formatted_termine.append(termin)
+        formatted_termine = self.query_seminare()       
         grouped_events = {}
         for key, group in groupby(formatted_termine, key=lambda x: (x["start"].year, x["start"].month)):
             grouped_events[key] = list(group)
