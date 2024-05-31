@@ -15,6 +15,7 @@ from zope.schema.vocabulary import SimpleTerm
 from zope.schema.vocabulary import SimpleVocabulary
 from collective.z3cform.datagridfield.datagridfield import DataGridFieldFactory
 from collective.z3cform.datagridfield.row import DictRow
+from zope.interface import invariant, Invalid
 
 
 anmeldeoptionen = SimpleVocabulary(
@@ -50,7 +51,7 @@ class ISeminarangebot(model.Schema):
 
 
     email = Email(title="E-Mail Adresse Ansprechpartner:in",
-        required=False)
+        required=True)
 
     telefon = schema.TextLine(title="Telefonnummer Ansprechpartner:in",
         required=False)
@@ -97,6 +98,15 @@ class ISeminarangebot(model.Schema):
     endtext = RichText(title = "Schlusstext zum Seminarangebot",
         description = "Der Text wird unterhalb der Seminardaten angezeigt.",
         required=False)
+
+    @invariant
+    def anmeldung_check(data):
+        if data.anmeldung == 'telefon':
+            if not data.telefon:
+                raise Invalid("Für eine Anmeldung per Telefon muss eine Telefonnummer angegeben werden.")
+        elif data.anmeldung == 'link':
+            if not data.formular:
+                raise Invalid("Für eine Anmeldung per Online-Formular muss ein Verweis auf ein Formular gesetzt werden.")
 
 
 @implementer(ISeminarangebot)

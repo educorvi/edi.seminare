@@ -7,7 +7,6 @@
 <body>
   <metal:main fill-slot="main">
     <tal:main-macro metal:define-macro="main">
-      <tal:variables tal:define="icons python:context.restrictedTraverse('@@iconresolver');">
 
         <div class="container">
 
@@ -42,6 +41,7 @@
                   <a target="_blank" href="${context/link}">${context/link}</a>
                 </p>
 
+                <!--
                 <div class="mt-4 mb-4 d-grid gap-2 text-center shadow p-3 text-success" tal:condition="python: context.anmeldung=='keine'">
                   <strong>Für eine Teilnahme ist keine Anmeldung erforderlich</strong>
                 </div>
@@ -54,7 +54,7 @@
 
                 <div class="d-grid gap-2 text-center shadow p-3" tal:condition="python: context.anmeldung=='telefon'">
                   <strong>Anmeldung per Telefon</strong>
-                  <p class="h4"><tal:icon tal:replace="structure python:icons.tag('telephone', tag_class='me-1')" />${context/telefon}</p>
+                  <p class="h4"><i class="mr-1 bi bi-telephone"></i>${context/telefon}</p>
                 </div>
 
                 <div class="d-grid gap-2 text-center shadow p-3" tal:condition="python: context.anmeldung=='link'">
@@ -63,25 +63,44 @@
                      tal:attributes="href python: context.formular.to_object.absolute_url()">
                      Anmelden</a>
                 </div>
+		-->
 
               </section>
 
               <h2>Terminübersicht</h2>
 
-              <ul tal:define="list_of_dates view/list_of_dates" class="list-group list-group-flush">
-                <li tal:repeat="date list_of_dates" 
-                    class="list-group-item d-flex justify-content-between align-items-start">
-                  <div class="ms-2 me-auto">
-                    <div class="fw-bold">${date/ort}</div>
-                      <span><tal:icon tal:replace="structure python:icons.tag('plone-calendar', tag_class='me-1')" />
-                        ${date/zeit/day}</span>
-                      <span class="p-4"><tal:icon tal:replace="structure python:icons.tag('plone-clock', tag_class='me-1')" />
-                        ${date/zeit/time}</span>
-                  </div>
-                  <span class="badge text-bg-${date/places/class} text-white rounded-pill">${date/places/number}</span>
-                </li>
-              </ul>
-          
+	      <table style="width:100%;" class="table">
+	        <thead>
+		  <tr>
+		    <th style="width:70%">Termin</th>
+		    <th style="width:30%">Anmeldung</th>
+		  </tr>
+	        </thead>
+		<tbody>
+		  <tr tal:repeat="date view/list_of_dates">
+		    <td><span class="font-weight-bold">${date/ort}</span> <i class="mr-1 bi bi-calendar"></i> ${date/zeit/day} <i class="mr-1 bi bi-clock"> </i>${date/zeit/time}</td>
+		    <td><span tal:replace="structure date/places"></span></td>
+		  </tr>
+		</tbody>
+              </table>
+
+		<div class="modal fade" id="edi_${view/uid}" tabindex="-1" aria-labelledby="ModalLabel_${view/uid}" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+			<h5 class="modal-title" id="ModalLabel_${view/uid}">Anmeldung für: ${context/title}</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		      </div>
+		      <div class="modal-body">
+			<p>Anmeldung via Telefon: <i class bi bi-telephone></i> <strong>${context/telefon}</strong></p>
+			<p class="small">Bitte halten Sie für die telefonische Anmeldung gegebenenfalls den gewünschten Veranstaltungsort und die Uhrzeit bereit.</p>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
               <div class="mt-4" tal:condition="context/endtext" tal:content="structure context/endtext/output"/>
 
             </div>
@@ -90,19 +109,34 @@
 
               <div class="card card-shadow mb-3">
                 <div class="card-header">
-                  Ansprechpartner:in
+                  Ansprechperson
                 </div>
                 <div class="card-body">
                   <p class="card-text"><strong>${context/kontakt}</strong></p>
-                  <ul>
-                    <li tal:condition="context/email" class="list-group-item">
-                      <tal:icon tal:replace="structure python:icons.tag('envelope', tag_class='me-1')" />
-                      <a href="mailto:${context/email}" class="card-link" style="font-size: 14pt;">${context/email}</a>
-                    </li>
-                    <li tal:condition="context/telefon" class="list-group-item">
-                      <tal:icon tal:replace="structure python:icons.tag('telephone', tag_class='me-1')" />
-                      <a href="tel:${context/telefon}" class="card-link" style="font-size: 14pt;">${context/telefon}</a>
-                    </li>
+                  <p tal:condition="context/email">
+                    <a href="mailto:${context/email}" class="card-link text-small">${context/email}</a>
+                  </p>
+                  <p tal:condition="context/telefon">
+		    <i class="mr-1 bi bi-telephone"></i>
+                    <a href="tel:${context/telefon}" class="card-link text-small">${context/telefon}</a>
+                  </p>
+
+                  <p class="font-weight-bold" tal:condition="python: context.anmeldung=='keine'">
+                    Für eine Teilnahme ist keine Anmeldung erforderlich
+                  </p>
+
+                  <p class="font-weight-bold" tal:condition="python: context.anmeldung=='email'">
+                    Anmeldung per E-Mail
+                  </p>
+
+                  <p class="font-weight-bold" tal:condition="python: context.anmeldung=='telefon'">
+                    Anmeldung per Telefon
+                  </p>
+
+                  <p class="font-weight-bold" tal:condition="python: context.anmeldung=='link'">
+                    Anmeldung per Online-Formular
+                  </p>
+
                 </div><!--card-body-->
               </div><!--card-->
 
@@ -114,7 +148,6 @@
 
         </div><!--container-->
 
-      </tal:variables>
     </tal:main-macro>  
   </metal:main>
 </body>

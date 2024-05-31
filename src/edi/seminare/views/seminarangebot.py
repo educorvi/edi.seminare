@@ -7,5 +7,6 @@ from edi.seminare.views.seminarliste import format_seminartermine
 class Seminarangebot(BrowserView):
 
     def __call__(self):
-        self.list_of_dates = format_seminartermine(self.context.seminartermine)
+        self.uid = self.context.UID()
+        self.list_of_dates = format_seminartermine(self.context)
         return self.index()

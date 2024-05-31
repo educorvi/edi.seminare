@@ -40,7 +40,7 @@
             <span tal:condition="not:allcards" tal:content="view/emptymessage"/>
             <div tal:attributes="class string:row row-cols-1 ${view/rowclass}">
               <div tal:repeat="item batch" class="col mb-4">
-                <div class="card h-100 linkcard">       
+                <div class="card h-100">       
                   <img tal:condition="item/topimage" tal:replace="structure item/topimage"/>
                   <div tal:condition="python: not item.get('topimage') and item.get('video')" 
                        tal:attributes="class python:item['video']['videoformat']">
@@ -50,8 +50,8 @@
                     <span tal:condition="item/review_class" tal:attributes="class string:badge badge-${item/review_class}" tal:content="item/review_title"/>
                     <p tal:condition="python: view.showRoofLine() and item.get('dachzeile')" class="card-body-roof" tal:content="item/dachzeile"/>
                     <h2 class="text-primary card-headline">
-                      <span tal:condition="not:item/shorttitle" tal:replace="item/title"/>
-                      <span tal:condition="item/shorttitle" tal:replace="item/shorttitle"/>
+                      <a href="${item/url}" tal:condition="not:item/shorttitle" tal:content="item/title"/>
+                      <a href="${item/url}" tal:condition="item/shorttitle" tal:content="item/shorttitle"/>
                     </h2>
                     <p tal:condition="view/showdesc" class="card-text small">
                       <span class="description" tal:content="item/description"/>
