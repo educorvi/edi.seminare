@@ -67,7 +67,7 @@ def format_seminartermine(seminarobj):
         except:
             end = termin['end']
         event['end'] = end
-        if (start.day,start.month) == (start.day,end.month):
+        if (start.day,start.month) == (end.day,end.month):
             formatted_day = start.strftime('%d.%m.%Y')
             formatted_time = start.strftime('%H:%M-') + end.strftime('%H:%M')
         else:
@@ -111,7 +111,8 @@ def format_telefonmodal(seminarobj):
         </button>
       </div>
       <div class="modal-body">
-        <p>Anmeldung via Telefon: <i class bi bi-telephone></i> <strong>{seminarobj.telefon}</strong></p>
+        <p>Anmeldung via Telefon: <i class="bi bi-telephone"></i> <strong>{seminarobj.telefon}</strong></p>
+        <p>Ansprechperson: <strong>{seminarobj.kontakt}</strong></p>
         <p class="small">Bitte halten Sie für die telefonische Anmeldung gegebenenfalls den gewünschten Veranstaltungsort und die Uhrzeit bereit.</p>
       </div>
     </div>

@@ -46,14 +46,14 @@ class ISeminarangebot(model.Schema):
         description = "Der Text wird oberhalb der Seminardaten angezeigt.",
         required=False)
 
-    kontakt = schema.TextLine(title="Name Ansprechpartner:in",
+    kontakt = schema.TextLine(title="Name Ansprechperson",
         required=True)
 
 
-    email = Email(title="E-Mail Adresse Ansprechpartner:in",
+    email = Email(title="E-Mail Adresse Ansprechperson",
         required=True)
 
-    telefon = schema.TextLine(title="Telefonnummer Ansprechpartner:in",
+    telefon = schema.TextLine(title="Telefonnummer Ansprechperson",
         required=False)
 
 

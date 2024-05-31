@@ -41,30 +41,6 @@
                   <a target="_blank" href="${context/link}">${context/link}</a>
                 </p>
 
-                <!--
-                <div class="mt-4 mb-4 d-grid gap-2 text-center shadow p-3 text-success" tal:condition="python: context.anmeldung=='keine'">
-                  <strong>Für eine Teilnahme ist keine Anmeldung erforderlich</strong>
-                </div>
-
-                <div class="d-grid gap-2 text-center shadow p-3" tal:condition="python: context.anmeldung=='email'">
-                  <strong>Anmeldung per E-Mail</strong>
-                  <a class="btn btn-primary" role="button" 
-                     href="mailto:${context/email}?subject=Anmeldung: ${context/title}">Anmelden</a>
-                </div>
-
-                <div class="d-grid gap-2 text-center shadow p-3" tal:condition="python: context.anmeldung=='telefon'">
-                  <strong>Anmeldung per Telefon</strong>
-                  <p class="h4"><i class="mr-1 bi bi-telephone"></i>${context/telefon}</p>
-                </div>
-
-                <div class="d-grid gap-2 text-center shadow p-3" tal:condition="python: context.anmeldung=='link'">
-                  <strong>Anmeldung per Online-Formular</strong>
-                  <a tal:condition="context/formular" class="btn btn-primary" role="button"
-                     tal:attributes="href python: context.formular.to_object.absolute_url()">
-                     Anmelden</a>
-                </div>
-		-->
-
               </section>
 
               <h2>Terminübersicht</h2>
@@ -94,7 +70,8 @@
 			</button>
 		      </div>
 		      <div class="modal-body">
-			<p>Anmeldung via Telefon: <i class bi bi-telephone></i> <strong>${context/telefon}</strong></p>
+			<p>Anmeldung via Telefon: <i class="bi bi-telephone"></i> <strong>${context/telefon}</strong></p>
+			<p>Ansprechperson: <strong>${context/kontakt}</strong></p>
 			<p class="small">Bitte halten Sie für die telefonische Anmeldung gegebenenfalls den gewünschten Veranstaltungsort und die Uhrzeit bereit.</p>
 		      </div>
 		    </div>
