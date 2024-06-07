@@ -4,6 +4,7 @@ from edi.seminare import _
 from Products.Five.browser import BrowserView
 from plone import api
 from datetime import datetime
+import re
 
 def format_plaetze(seminarobj, location, day, time, places):
     """Helper Function to format free places for seminar"""
@@ -28,6 +29,10 @@ def format_plaetze(seminarobj, location, day, time, places):
 
     if seminarobj.anmeldung == 'keine':
         link = '<small class="text-success"><strong>nicht erforderlich</strong></small>'
+        if is_url(location):
+            erg = 'beitreten'
+            btnclass = 'btn btn-success'
+            link = f'<a role="button" style="width:140px" class="{btnclass}" href="{location}">{erg}</a>'
     elif verfuegbarkeit == -1:
         link = '<small class="text-danger"><strong>ausgebucht</strong></small>'
     else:
@@ -50,13 +55,27 @@ def format_plaetze(seminarobj, location, day, time, places):
             link = f'<button type="button" style="width:140px" class="{btnclass}" data-toggle="modal" data-target="#edi_{seminarobj.UID()}">{erg}</button>'
     return link
 
+def is_url(location):
+    """Helper Function to check if it is a Videocall URL"""
+    # This regular expression roughly checks for (http/s):// and a domain name with optional path/query.
+    url_pattern = re.compile(
+        r'^(https?://)?'  # HTTP or HTTPS protocols
+        r'([\da-z\.-]+)\.'  # Domain name
+        r'([a-z\.]{2,6})'  # Top-level domain
+        r'([/:\w \.-]*)*\/?$'  # Path
+    )
+    return re.match(url_pattern, string) is not None
+
 def format_seminartermine(seminarobj):
     """Helper Function to make datetime-objects human readable in seminarevent context"""
     seminartermine = seminarobj.seminartermine
     formatted_events = []
     for termin in seminartermine:
         event = {}
-        event['ort'] = termin['location']
+        location = termin['location']
+        if is_url(location):
+            location = 'Online'
+        event['ort'] = location
         try:
             start = datetime.strptime(termin['start'], '%Y-%m-%dT%H:%M')
         except:
@@ -75,7 +94,8 @@ def format_seminartermine(seminarobj):
             formatted_time = start.strftime('%H:%M-') + end.strftime('%H:%M')
         if (start.hour,start.minute) == (0,0) and (start.hour,start.minute) == (end.hour,end.minute):
             formatted_time = False
-        event['zeit'] = {'day':formatted_day, 'time':formatted_time}
+        icsindex = f"{seminarobj.UID()}@{seminartermine.index(termin)}"
+        event['zeit'] = {'day':formatted_day, 'time':formatted_time, 'ics':icsindex}
         event['places'] = format_plaetze(seminarobj, termin['location'], formatted_day, formatted_time, termin['places'])
         formatted_events.append(event)
     formatted_events.sort(key=lambda x: x["start"])
