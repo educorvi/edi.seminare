@@ -18,12 +18,12 @@ def format_plaetze(seminarobj, location, day, time, places):
         erg_class = 'danger'
     elif verfuegbarkeit == 0:
         erg = 'Warteliste'
-        erg_class = 'warning'
+        erg_class = 'primary'
     elif verfuegbarkeit == 1000:
         erg = 'freie Plätze'
         erg_class = 'success'
     else:
-        erg = f'{verfuegbarkeit} Plätze'
+        erg = f'noch {verfuegbarkeit} Plätze'
         erg_class = 'success'
 
     if seminarobj.anmeldung == 'keine':
@@ -37,17 +37,17 @@ def format_plaetze(seminarobj, location, day, time, places):
             email = seminarobj.email
             icon = '<i class="bi bi-envelope"></i>'
             url = f'mailto:{email}?subject=Anmeldung: {title} {day} {time}'
-            link = f'<a role="button" class="{btnclass}" href="{url}">{icon} {erg}</a>'
+            link = f'<a role="button" style="width:140px" class="{btnclass}" href="{url}">{erg}</a>'
         elif seminarobj.anmeldung == 'link':
             icon = '<i text-white class="bi bi-file-check"></i>'
             try:
                 url = seminarobj.formular.to_object.absolute_url()
             except:
                 url = ''
-            link = f'<a role="button" class="{btnclass}" href="{url}">{icon} {erg}</a>'
+            link = f'<a role="button" style="width:140px" class="{btnclass}" href="{url}">{erg}</a>'
         elif seminarobj.anmeldung == 'telefon':
             icon = '<i class="bi bi-telephone"></i>'
-            link = f'<button type="button" class="{btnclass}" data-toggle="modal" data-target="#edi_{seminarobj.UID()}">{icon} {erg}</button>'
+            link = f'<button type="button" style="width:140px" class="{btnclass}" data-toggle="modal" data-target="#edi_{seminarobj.UID()}">{erg}</button>'
     return link
 
 def format_seminartermine(seminarobj):
@@ -72,7 +72,7 @@ def format_seminartermine(seminarobj):
             formatted_time = start.strftime('%H:%M-') + end.strftime('%H:%M')
         else:
             formatted_day = start.strftime('%d.%m.- ') + end.strftime('%d.%m.%Y')
-            formatted_time = start.strftime('%H:%M-') + start.strftime('%H:%M')
+            formatted_time = start.strftime('%H:%M-') + end.strftime('%H:%M')
         if (start.hour,start.minute) == (0,0) and (start.hour,start.minute) == (end.hour,end.minute):
             formatted_time = False
         event['zeit'] = {'day':formatted_day, 'time':formatted_time}

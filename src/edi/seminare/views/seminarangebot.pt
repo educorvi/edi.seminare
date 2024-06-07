@@ -49,12 +49,12 @@
 	        <thead>
 		  <tr>
 		    <th style="width:70%">Termin</th>
-		    <th style="width:30%">Anmeldung</th>
+		    <th style="width:30%">Anmelden</th>
 		  </tr>
 	        </thead>
 		<tbody>
 		  <tr tal:repeat="date view/list_of_dates">
-		    <td><span class="font-weight-bold">${date/ort}</span> <i class="mr-1 bi bi-calendar"></i> ${date/zeit/day} <i class="mr-1 bi bi-clock"> </i>${date/zeit/time}</td>
+		    <td><span class="font-weight-bold">${date/ort}</span> <i class="mr-1 bi bi-calendar"></i> ${date/zeit/day} <span tal:condition="date/zeit/time"><i class="mr-1 bi bi-clock"> </i>${date/zeit/time}</span></td>
 		    <td><span tal:replace="structure date/places"></span></td>
 		  </tr>
 		</tbody>

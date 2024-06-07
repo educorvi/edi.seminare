@@ -39,7 +39,7 @@
                       <th style="width:15%;">Beginn/Ende</th>
                       <th style="width:15%;">Ort</th>
                       <th style="width:30%;">Veranstaltung</th>
-                      <th style="width:25%;">Anmeldung</th>
+                      <th style="width:25%;">Anmelden</th>
                     </tr>
                   </thead>
                   <tbody class="table-group-divider">
