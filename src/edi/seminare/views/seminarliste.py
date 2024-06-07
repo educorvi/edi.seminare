@@ -94,8 +94,8 @@ def format_seminartermine(seminarobj):
             formatted_time = start.strftime('%H:%M-') + end.strftime('%H:%M')
         if (start.hour,start.minute) == (0,0) and (start.hour,start.minute) == (end.hour,end.minute):
             formatted_time = False
-        icsindex = f"{seminarobj.UID()}@{seminartermine.index(termin)}"
-        event['zeit'] = {'day':formatted_day, 'time':formatted_time, 'ics':icsindex}
+        cal_url = f"{seminarobj.absolute_url()}/@@cal-view?index={seminartermine.index(termin)}"
+        event['zeit'] = {'day':formatted_day, 'time':formatted_time, 'cal_url':cal_url}
         event['places'] = format_plaetze(seminarobj, termin['location'], formatted_day, formatted_time, termin['places'])
         formatted_events.append(event)
     formatted_events.sort(key=lambda x: x["start"])

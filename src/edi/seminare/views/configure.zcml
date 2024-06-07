@@ -8,10 +8,9 @@
 
   <browser:page
     name="cal-view"
-    for="*"
+    for="edi.seminare.content.seminarangebot.ISeminarangebot"
     class=".cal_view.CalView"
     permission="zope2.View"
-    layer="edi.seminare.interfaces.IEdiSeminareLayer"
     />
 
   <browser:page
