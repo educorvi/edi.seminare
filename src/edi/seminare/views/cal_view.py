@@ -27,9 +27,8 @@ class CalView(BrowserView):
         end = termin['end']
         location = termin['location']
         if is_url(location):
-            url = location
+            description += f"\r\nBeitreten: {location}"
             location = 'Online'
-        description += f"\r\nBeitreten: {url}"
         cal = Calendar()
 
         # Create an event

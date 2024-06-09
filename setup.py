@@ -57,6 +57,8 @@ setup(
         'plone.app.lockingbehavior',
         'plone.schema',
         'collective.z3cform.datagridfield',
+        'ics',
+        'regex'
     ],
     extras_require={
         'test': [

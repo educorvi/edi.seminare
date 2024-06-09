@@ -43,7 +43,7 @@
                 </thead>
                 <tbody>
                   <tr tal:repeat="date list_of_dates">
-                    <td><small>${date/zeit/day}</small></td>
+                    <td><a href="${date/zeit/cal_url}" title="Seminartermin in Outloook übernehmen"><i class="bi bi-box-arrow-down"></i></a> <small>${date/zeit/day}</small></td>
                     <td><small tal:condition="date/zeit/time">${date/zeit/time}</small></td>
                     <td><small>${date/ort}</small></td>
 		    <td><span tal:replace="structure date/places"/><td>

@@ -4,7 +4,7 @@ from edi.seminare import _
 from Products.Five.browser import BrowserView
 from plone import api
 from datetime import datetime
-import re
+import regex
 
 def format_plaetze(seminarobj, location, day, time, places):
     """Helper Function to format free places for seminar"""
@@ -58,13 +58,8 @@ def format_plaetze(seminarobj, location, day, time, places):
 def is_url(location):
     """Helper Function to check if it is a Videocall URL"""
     # This regular expression roughly checks for (http/s):// and a domain name with optional path/query.
-    url_pattern = re.compile(
-        r'^(https?://)?'  # HTTP or HTTPS protocols
-        r'([\da-z\.-]+)\.'  # Domain name
-        r'([a-z\.]{2,6})'  # Top-level domain
-        r'([/:\w \.-]*)*\/?$'  # Path
-    )
-    return re.match(url_pattern, string) is not None
+    url_pattern = regex.compile(r'\bhttps?://[^\s]+?\?.+\b')
+    return regex.match(url_pattern, location) is not None
 
 def format_seminartermine(seminarobj):
     """Helper Function to make datetime-objects human readable in seminarevent context"""
