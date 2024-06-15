@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-1.0a1 (unreleased)
+1.0a1 (2024-06-15)
 ------------------
 
 - Initial release.
