@@ -14,7 +14,7 @@ long_description = '\n\n'.join([
 
 setup(
     name='edi.seminare',
-    version='1.0a1',
+    version='1.0',
     description="Add-On for internal education events or courses",
     long_description=long_description,
     # Get more from https://pypi.org/classifiers/
