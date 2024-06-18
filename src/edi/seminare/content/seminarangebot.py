@@ -35,6 +35,7 @@ class ISeminartermin(model.Schema):
     location = schema.TextLine(title=u"Ort der Veranstaltung", required=True)
     places = schema.TextLine(title="Verfügbare Plätze",
         description="-1 = ausgebucht, 0 = Warteliste, 1000 = freie Plätze, 1-999 = Anzahl der freien Plätze",
+        default="1000",
         required=True)
 
 
