@@ -34,8 +34,10 @@ class CalView(BrowserView):
         # Create an event
         event = Event()
         event.name = title
-        event.begin = start.strftime("%Y-%m-%d %H:%M:%S")
-        event.end = end.strftime("%Y-%m-%d %H:%M:%S")
+        event.begin = start
+        event.end = end
+        #event.begin = start.strftime("%Y-%m-%d %H:%M:%S")
+        #event.end = end.strftime("%Y-%m-%d %H:%M:%S")
         event.description = description
         event.location = location
         event.url = url

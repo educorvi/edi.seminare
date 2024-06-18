@@ -41,7 +41,9 @@ def format_plaetze(seminarobj, location, day, time, places):
         if seminarobj.anmeldung == 'email':
             email = seminarobj.email
             icon = '<i class="bi bi-envelope"></i>'
-            url = f'mailto:{email}?subject=Anmeldung: {title} {day} {time}'
+            url = f'mailto:{email}?subject=Anmeldung: {title} {day}'
+            if time:
+                url = f'mailto:{email}?subject=Anmeldung: {title} {day} {time}'
             link = f'<a role="button" style="width:140px" class="{btnclass}" href="{url}">{erg}</a>'
         elif seminarobj.anmeldung == 'link':
             icon = '<i text-white class="bi bi-file-check"></i>'
