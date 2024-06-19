@@ -58,7 +58,8 @@ setup(
         'plone.schema',
         'collective.z3cform.datagridfield',
         'ics',
-        'regex'
+        'regex',
+        'pytz'
     ],
     extras_require={
         'test': [

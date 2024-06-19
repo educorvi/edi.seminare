@@ -6,6 +6,8 @@ from Products.Five.browser import BrowserView
 from zope.interface import implementer
 from zope.interface import Interface
 from edi.seminare.views.seminarliste import is_url
+import pytz
+import datetime
 
 class ICalView(Interface):
     """ Marker Interface for ICalView"""
@@ -34,10 +36,11 @@ class CalView(BrowserView):
         # Create an event
         event = Event()
         event.name = title
+        berlin_timezone = pytz.timezone('Europe/Berlin')
+        start = berlin_timezone.localize(start)
+        end = berlin_timezone.localize(end)
         event.begin = start
         event.end = end
-        #event.begin = start.strftime("%Y-%m-%d %H:%M:%S")
-        #event.end = end.strftime("%Y-%m-%d %H:%M:%S")
         event.description = description
         event.location = location
         event.url = url
