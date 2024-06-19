@@ -2,7 +2,7 @@
 
 from edi.seminare import _
 from Products.Five.browser import BrowserView
-from edi.seminare.views.seminarliste import format_seminartermine, get_monthname
+from edi.seminare.views.seminarliste import format_seminartermine, get_monthname, format_telefonmodal
 from plone import api
 from datetime import datetime
 from itertools import groupby
@@ -17,11 +17,14 @@ class Terminliste(BrowserView):
         formatted_termine = []
         for seminar in seminare:
             seminarobj = seminar.getObject()
-            terminliste = format_seminartermine(seminarobj.seminartermine)
+            terminliste = format_seminartermine(seminarobj)
             for termin in terminliste:
                 termin['title'] = seminarobj.title
                 termin['url'] = seminarobj.absolute_url()
                 formatted_termine.append(termin)
+            if seminarobj.anmeldung == 'telefon':
+                if hasattr(self, 'telefonnummern'):
+                    self.telefonnummern.append(format_telefonmodal(seminarobj))
         formatted_termine.sort(key=lambda x: x["start"])
         return formatted_termine
 
@@ -47,6 +50,7 @@ class Terminliste(BrowserView):
           'places':'Anzeige der freien Plätze'
         ]
         """
+        self.telefonnummern = []
         formatted_termine = self.query_seminare()       
         grouped_events = {}
         for key, group in groupby(formatted_termine, key=lambda x: (x["start"].year, x["start"].month)):

@@ -7,7 +7,6 @@
 <body>
   <metal:main fill-slot="main">
     <tal:main-macro metal:define-macro="main">
-      <tal:variables tal:define="icons python:context.restrictedTraverse('@@iconresolver');">
 
         <div class="container">
 
@@ -29,37 +28,39 @@
 
               <div class="mb-4" tal:condition="context/text|nothing" tal:content="structure context/text/output"/>
 
-              <div tal:repeat="group python:view.seminartermine.items()">
+              <div class="mb-5" tal:repeat="group python:view.seminartermine.items()">
 
                 <h2 tal:define="key python:group[0]" tal:content="python: str(view.get_month(key[1]))+' '+str(key[0])"></h2>
 
-                <table class="table">
+                <table style="width:100%;" class="table">
                   <thead>
                     <tr>
-                      <th scope="col">Datum</th>
-                      <th scope="col">Beginn/Ende</th>
-                      <th scope="col">Ort</th>
-                      <th scope="col">Veranstaltung</th>
-                      <th scope="col">freie Plätze</th>
+                      <th style="width:20%;">Datum</th>
+                      <th style="width:15%;">Beginn/Ende</th>
+                      <th style="width:15%;">Ort</th>
+                      <th style="width:30%;">Veranstaltung</th>
+                      <th style="width:20%;">Anmelden</th>
                     </tr>
                   </thead>
                   <tbody class="table-group-divider">
                     <tr tal:repeat="seminartermin python:group[1]">
-                      <td scope="row">
-                        ${seminartermin/zeit/day}
+                      <td>
+		        <a href="${seminartermin/zeit/cal_url}" title="Seminartermin in Outloook übernehmen"><i class="bi bi-box-arrow-down"></i></a>
+                        <small>${seminartermin/zeit/day}</small>
                       </td>
                       <td>
-                        ${seminartermin/zeit/time}&nbsp;Uhr
+                        <small tal:condition="seminartermin/zeit/time">${seminartermin/zeit/time}&nbsp;Uhr</small>
                       </td>
-                      <td>${seminartermin/ort}</td>
-                      <td><a href="${seminartermin/url}">${seminartermin/title}</td>
-                      <td><span class="badge text-bg-${seminartermin/places/class} text-white rounded-pill">${seminartermin/places/number}</span>
-                      </td>
+                      <td><small>${seminartermin/ort}</small></td>
+                      <td><small><a href="${seminartermin/url}">${seminartermin/title}</small></td>
+                      <td><span tal:replace="structure seminartermin/places"/></td>
                     </tr>
                   </tbody>
                 </table>
 
               </div><!-- Iterator Seminartermine -->
+
+              <div tal:repeat="telefonnummer view/telefonnummern" tal:replace="structure telefonnummer"/>
 
               <div class="mb-4" tal:condition="context/schlusstext|nothing" tal:content="structure context/schlusstext/output"/>              
 
@@ -72,7 +73,6 @@
           </div><!-- row -->
         </div><!-- container -->
 
-      </tal:variables>
     </tal:main-macro>
   </metal:main>
 </body>

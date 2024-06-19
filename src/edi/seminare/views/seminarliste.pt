@@ -7,7 +7,6 @@
 <body>
   <metal:main fill-slot="main">
     <tal:main-macro metal:define-macro="main">
-      <tal:variables tal:define="icons python:context.restrictedTraverse('@@iconresolver');">
 
         <div class="container">
 
@@ -29,28 +28,32 @@
 
               <div class="mb-4" tal:condition="context/text|nothing" tal:content="structure context/text/output"/>
 
-              <div tal:repeat="seminar view/seminare">
+              <div class="mb-5" tal:repeat="seminar view/seminare">
 
                 <h2><a href="${seminar/url}">${seminar/title}</a><h2>
 
-              <table class="table" tal:define="list_of_dates seminar/list_of_dates">
+              <table style="width: 100%;" class="table" tal:define="list_of_dates seminar/list_of_dates">
                 <thead>
-                  <th>Datum</th>
-                  <th>Beginn/Ende</th>
-                  <th>Ort</th>
-                  <th>Freie Plätze</th>
+		  <tr>
+                    <th stlye="width:30%;">Datum</th>
+                    <th style="width:20%">Beginn/Ende</th>
+                    <th style="width:25%">Ort</th>
+                    <th style="width:25%">Anmelden</th>
+		  </tr>
                 </thead>
-                <tbody class="table-group-divider">
+                <tbody>
                   <tr tal:repeat="date list_of_dates">
-                    <td>${date/zeit/day}</td>
-                    <td>${date/zeit/time}</td>
-                    <td>${date/ort}</td>
-                    <td><span class="badge text-bg-${date/places/class} text-white rounded-pill">${date/places/number}</span></td>
+                    <td><a href="${date/zeit/cal_url}" title="Seminartermin in Outloook übernehmen"><i class="bi bi-box-arrow-down"></i></a> <small>${date/zeit/day}</small></td>
+                    <td><small tal:condition="date/zeit/time">${date/zeit/time}</small></td>
+                    <td><small>${date/ort}</small></td>
+		    <td><span tal:replace="structure date/places"/><td>
                   </tr>
                 </tbody>
               </table>
 
             </div>
+
+	      <div tal:repeat="telefonnummer view/telefonnummern" tal:replace="structure telefonnummer"/>
 
               <div class="mb-4" tal:condition="context/schlusstext|nothing" tal:content="structure context/schlusstext/output"/>              
 
@@ -63,7 +66,6 @@
           </div><!-- row -->
         </div><!-- container -->
 
-      </tal:variables>
     </tal:main-macro>
   </metal:main>
 

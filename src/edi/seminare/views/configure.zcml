@@ -7,6 +7,13 @@
   -*- extra stuff goes here -*-
 
   <browser:page
+    name="cal-view"
+    for="edi.seminare.content.seminarangebot.ISeminarangebot"
+    class=".cal_view.CalView"
+    permission="zope2.View"
+    />
+
+  <browser:page
     name="seminarkarten"
     for="Products.CMFCore.interfaces.IFolderish"
     class=".seminarkarten.Seminarkarten"

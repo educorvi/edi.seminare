@@ -14,7 +14,7 @@ long_description = '\n\n'.join([
 
 setup(
     name='edi.seminare',
-    version='1.0a1',
+    version='1.0a2.dev0',
     description="Add-On for internal education events or courses",
     long_description=long_description,
     # Get more from https://pypi.org/classifiers/
@@ -57,6 +57,9 @@ setup(
         'plone.app.lockingbehavior',
         'plone.schema',
         'collective.z3cform.datagridfield',
+        'ics',
+        'regex',
+        'pytz'
     ],
     extras_require={
         'test': [
