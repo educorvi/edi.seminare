@@ -4,6 +4,8 @@ Changelog
 
 1.1 (unreleased)
 ----------------
+Initiale Release von edi.seminare nach Abnahme durch BGHW (lwalther)
+
 1.0a2 (unreleased)
 ------------------
 

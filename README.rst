@@ -1,60 +1,28 @@
-.. This README is meant for consumption by humans and pypi. Pypi can render rst files so please do not use Sphinx features.
-   If you want to learn more about writing documentation, please check out: http://docs.plone.org/about/documentation_styleguide.html
-   This text does not appear on pypi or github. It is a comment.
-
-.. image:: https://travis-ci.org/collective/edi.seminare.svg?branch=master
-    :target: https://travis-ci.org/collective/edi.seminare
-
-.. image:: https://coveralls.io/repos/github/collective/edi.seminare/badge.svg?branch=master
-    :target: https://coveralls.io/github/collective/edi.seminare?branch=master
-    :alt: Coveralls
-
-.. image:: https://img.shields.io/pypi/v/edi.seminare.svg
-    :target: https://pypi.python.org/pypi/edi.seminare/
-    :alt: Latest Version
-
-.. image:: https://img.shields.io/pypi/status/edi.seminare.svg
-    :target: https://pypi.python.org/pypi/edi.seminare
-    :alt: Egg Status
-
-.. image:: https://img.shields.io/pypi/pyversions/edi.seminare.svg?style=plastic   :alt: Supported - Python Versions
-
-.. image:: https://img.shields.io/pypi/l/edi.seminare.svg
-    :target: https://pypi.python.org/pypi/edi.seminare/
-    :alt: License
-
-
 ============
 edi.seminare
 ============
 
-Tell me what your product does
+Artikeltyp und Views für die Präsentation interner Aus- und Weiterbildungsangebote im Intranet
 
 Features
 --------
 
-- Can be bullet points
-
-
-Examples
---------
-
-This add-on can be seen in action at the following sites:
-- Is there a page on the internet where everybody can see the features?
+- Artikeltyp Seminarangebot
+- Einzelansicht Seminar mit Portlet Ansprechpartner
+- Ordneransicht Seminare nach Themen mit Sortierung nach Seminartitel (gemäß Sortierung im Ordner)
+- Ordneransicht Seminare nach Terminen mit Sortierung nach Datum, Gruppierung für Monate
+- Ordneransicht Seminare nach Unterordnern für die Darstellung zielgruppenspezifischer Seminare
+- Downloadmöglichkeit von ICAL-Files für Import im Kalender
+- Möglichkeit zum Hinterlegen von VK-Terminen mit Button zum Beitreten
 
 
 Documentation
 -------------
 
-Full documentation for end users can be found in the "docs" folder, and is also available online at http://docs.plone.org/foo/bar
+Eine vollständige Online-Dokumentation für Endbenutzer kann über kurse.uv-kooperation.de nach vorheriger
+Registrierung eingesehen werden:
 
-
-Translations
-------------
-
-This product has been translated into
-
-- Klingon (thanks, K'Plai)
+https://kurse.uv-kooperation.de/online-kurse/cms-plone/artikeltypen-nach-mass/seminare-anlegen
 
 
 Installation
@@ -76,16 +44,15 @@ and then running ``bin/buildout``
 Contribute
 ----------
 
-- Issue Tracker: https://github.com/collective/edi.seminare/issues
-- Source Code: https://github.com/collective/edi.seminare
-- Documentation: https://docs.plone.org/foo/bar
+- Issue Tracker: https://github.com/educorvi/edi.seminare/issues
+- Source Code: https://github.com/educorvi/edi.seminare
 
 
 Support
 -------
 
 If you are having issues, please let us know.
-We have a mailing list located at: project@example.com
+We have a mailing list located at: info@educorvi.de
 
 
 License
