@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-1.1 (unreleased)
+1.1 (2024-06-19)
 ----------------
 Initiale Release von edi.seminare nach Abnahme durch BGHW (lwalther)
 
