@@ -7,6 +7,14 @@
   -*- extra stuff goes here -*-
 
   <browser:page
+    name="pure-seminarangebot"
+    for="Products.CMFCore.interfaces.IFolderish"
+    class=".pure_seminarangebot.PureSeminarangebot"
+    template="pure_seminarangebot.pt"
+    permission="zope2.View"
+    />
+
+  <browser:page
     name="cal-view"
     for="edi.seminare.content.seminarangebot.ISeminarangebot"
     class=".cal_view.CalView"
