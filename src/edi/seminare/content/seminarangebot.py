@@ -23,7 +23,8 @@ anmeldeoptionen = SimpleVocabulary(
         SimpleTerm(value='keine', title='keine Anmeldung erforderlich'),
         SimpleTerm(value='email', title='Anmeldung per E-Mail'),
         SimpleTerm(value='telefon', title='Anmeldung per Telefon'),
-        SimpleTerm(value='link', title='Anmeldung per Formular')
+        SimpleTerm(value='link', title='Anmeldung per Formular'),
+        SimpleTerm(value='extlink', title='Anmeldung per externem Link')
     ]
 )
 
@@ -62,11 +63,11 @@ class ISeminarangebot(model.Schema):
         vocabulary="plone.app.vocabularies.Catalog",
         required=False,)
 
-    directives.widget("verweis",
-        RelatedItemsFieldWidget,
-        pattern_options={
-            "selectableTypes": ["Document", "Event"],
-        })
+    #directives.widget("verweis",
+    #    RelatedItemsFieldWidget,
+    #    pattern_options={
+    #        "selectableTypes": ["Document", "Event"],
+    #    })
 
     link = schema.URI(title="Link zu einem Artikel im Internet",
         required=False)
@@ -85,6 +86,9 @@ class ISeminarangebot(model.Schema):
         pattern_options={
             "selectableTypes": ["EasyForm"],
         })
+
+    extlink = schema.URI(title="Verweis auf ein externes Anmeldeformular im Internet",
+        required = False)
 
     seminartermine = schema.List(title=u"Liste der Seminartermine",
         value_type=DictRow(
@@ -108,7 +112,9 @@ class ISeminarangebot(model.Schema):
         elif data.anmeldung == 'link':
             if not data.formular:
                 raise Invalid("Für eine Anmeldung per Online-Formular muss ein Verweis auf ein Formular gesetzt werden.")
-
+        elif data.anmeldung == 'extlink':
+            if not data.extlink:
+                raise Invalid("Für eine Anmeldung per externem Link muss ein externer Link eingetragen werden.")
 
 @implementer(ISeminarangebot)
 class Seminarangebot(Container):

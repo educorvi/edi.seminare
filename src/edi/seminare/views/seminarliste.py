@@ -52,6 +52,10 @@ def format_plaetze(seminarobj, location, day, time, places):
             except:
                 url = ''
             link = f'<a role="button" style="width:140px" class="{btnclass}" href="{url}">{erg}</a>'
+        elif seminarobj.anmeldung == 'extlink':
+            icon = '<i text-white class="bi bi-file-check-fill"></i>'
+            url = seminarobj.extlink
+            link = f'<a target="_blank" role="button" style="width:140px" class="{btnclass}" href="{url}">{erg}</a>'
         elif seminarobj.anmeldung == 'telefon':
             icon = '<i class="bi bi-telephone"></i>'
             link = f'<button type="button" style="width:140px" class="{btnclass}" data-toggle="modal" data-target="#edi_{seminarobj.UID()}">{erg}</button>'

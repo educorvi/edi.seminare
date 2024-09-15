@@ -32,7 +32,6 @@ class Terminliste(BrowserView):
         """
         Es wird eine Liste "self.seminartermine" zurückgegeben
         Jedes Element der Terminliste hat folgende Schlüssel oder Attribute:
-        
         start - Startdatum (nur für Sortierung)
         end - Enddatum (nur für Sortierung)
         zeit - formatierte Darstellung Datum, Uhrzeit
