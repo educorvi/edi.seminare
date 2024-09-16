@@ -8,7 +8,7 @@
 
   <browser:page
     name="pure-seminarangebot"
-    for="Products.CMFCore.interfaces.IFolderish"
+    for="edi.seminare.content.seminarangebot.ISeminarangebot"
     class=".pure_seminarangebot.PureSeminarangebot"
     template="pure_seminarangebot.pt"
     permission="zope2.View"

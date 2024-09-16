@@ -1,13 +1,24 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:metal="http://xml.zope.org/namespaces/metal"
-      xmlns:tal="http://xml.zope.org/namespaces/tal"
-      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-      i18n:domain="edi.seminare"
-      metal:use-macro="context/main_template/macros/master">
-<body>
-  <metal:block fill-slot="content-core">
-      <h2 i18n:translate="">Sample View</h2>
-      <p tal:content="view/msg">this gets replaced</p>
-  </metal:block>
-</body>
-</html>
+<p class="card-body-desc">${context/description}</p>
+
+<section tal:condition="python: context.verweis or context.link">
+  <p class="card-body-desc"><strong>Weitere Informationen:</strong></p>
+
+  <p class="card-body-desc" tal:condition="context/verweis">
+    <a tal:attributes="href python:context.verweis.to_object.absolute_url()"
+      tal:content="python:context.verweis.to_object.title"></a>
+  </p>
+
+  <p class="card-body-desc" tal:condition="context/link">
+    <a target="_blank" href="${context/link}">${context/link}</a>
+  </p>
+</section>
+
+<section>
+  <p class="card-body-desc"><strong>Terminübersicht:</strong></p>
+  <article tal:repeat="date view/list_of_dates">
+    <p class="card-body-desc"><a href="${date/zeit/cal_url}" title="Seminartermin in Outloook übernehmen"><i class="bi bi-box-arrow-down"></i></a>
+    <span>${date/ort}</span> ${date/zeit/day} <span tal:condition="date/zeit/time"> ${date/zeit/time}</span></p>
+  </article>
+</section>
+
+<p class="text-right card-body-desc"><a href="${context/absolute_url}">Zum Seminarangebot</a></p>

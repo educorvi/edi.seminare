@@ -16,7 +16,8 @@ from zope.schema.vocabulary import SimpleVocabulary
 from collective.z3cform.datagridfield.datagridfield import DataGridFieldFactory
 from collective.z3cform.datagridfield.row import DictRow
 from zope.interface import invariant, Invalid
-
+from plone import api as ploneapi
+from zope.globalrequest import getRequest
 
 anmeldeoptionen = SimpleVocabulary(
     [
@@ -120,3 +121,9 @@ class ISeminarangebot(model.Schema):
 class Seminarangebot(Container):
     """ Content-type class for ISeminarangebot
     """
+
+    def get_cluster_content(self, request=None):
+        if not request:
+            request = getRequest()
+        view = ploneapi.content.get_view(name='pure-seminarangebot', context=self, request=request)
+        return view.__call__()
