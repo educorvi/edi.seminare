@@ -2,11 +2,11 @@ Changelog
 =========
 
 
-1.2 (unreleased)
+1.2 (2024-09-23)
 ----------------
 
-- Nothing changed yet.
-
+- neue Ansicht "pure-seminarangebot" zur Einbindung in Clusterkarte (API-Karte) (lwalther)
+- externer Link für die Anmeldung, keine Einschränkungen beim Verweis auf einen Artikel im Intranet (lwalther)
 
 1.1 (2024-06-19)
 ----------------
