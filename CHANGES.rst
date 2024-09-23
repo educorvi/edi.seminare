@@ -2,10 +2,10 @@ Changelog
 =========
 
 
-1.3 (unreleased)
+1.3 (2024-09-23)
 ----------------
 
-- Nothing changed yet.
+- Bugfix in den Unit-Tests (lwalther) 
 
 
 1.2 (2024-09-23)
