@@ -3,13 +3,17 @@ from Products.Five.browser import BrowserView
 
 import regex
 
+from edi.seminare import logger
 
-def format_plaetze(seminarobj, location, day, time, places):
+
+def format_plaetze(seminarobj, location, day, time, places):  # noqa: C901
     """Helper Function to format free places for seminar"""
+    link = ""
     erg = "Fehler"
     try:
         int(places)
-    except:
+    except Exception as e:
+        logger.error(f"Error parsing places for seminar {seminarobj.title}: {e}")
         return f"<a href={seminarobj.absolute_url()}>zum Seminarangebot</a>"
     verfuegbarkeit = int(places)
     if verfuegbarkeit == -1:
@@ -38,25 +42,25 @@ def format_plaetze(seminarobj, location, day, time, places):
         btnclass = f"btn btn-{erg_class}"
         if seminarobj.anmeldung == "email":
             email = seminarobj.email
-            icon = '<i class="bi bi-envelope"></i>'
             url = f"mailto:{email}?subject=Anmeldung: {title} {day}"
             if time:
                 url = f"mailto:{email}?subject=Anmeldung: {title} {day} {time}"
             link = f'<a role="button" style="width:140px" class="{btnclass}" href="{url}">{erg}</a>'
         elif seminarobj.anmeldung == "link":
-            icon = '<i text-white class="bi bi-file-check"></i>'
             try:
                 url = seminarobj.formular.to_object.absolute_url()
-            except:
+            except Exception as e:
+                logger.error(f"Error getting formular URL for seminar {seminarobj.title}: {e}")
                 url = ""
             link = f'<a role="button" style="width:140px" class="{btnclass}" href="{url}">{erg}</a>'
         elif seminarobj.anmeldung == "extlink":
-            icon = '<i text-white class="bi bi-file-check-fill"></i>'
             url = seminarobj.extlink
             link = f'<a target="_blank" role="button" style="width:140px" class="{btnclass}" href="{url}">{erg}</a>'
         elif seminarobj.anmeldung == "telefon":
-            icon = '<i class="bi bi-telephone"></i>'
-            link = f'<button type="button" style="width:140px" class="{btnclass}" data-toggle="modal" data-target="#edi_{seminarobj.UID()}">{erg}</button>'
+            link = (
+                f'<button type="button" style="width:140px" class="{btnclass}" data-toggle="modal" '
+                f'data-target="#edi_{seminarobj.UID()}">{erg}</button>'
+            )
     return link
 
 
@@ -79,12 +83,14 @@ def format_seminartermine(seminarobj):
         event["ort"] = location
         try:
             start = datetime.strptime(termin["start"], "%Y-%m-%dT%H:%M")
-        except:
+        except Exception as e:
+            logger.error(f"Error parsing start date for seminar {seminarobj.title}: {e}")
             start = termin["start"]
         event["start"] = start
         try:
             end = datetime.strptime(termin["end"], "%Y-%m-%dT%H:%M")
-        except:
+        except Exception as e:
+            logger.error(f"Error parsing end date for seminar {seminarobj.title}: {e}")
             end = termin["end"]
         event["end"] = end
         if (start.day, start.month) == (end.day, end.month):
@@ -138,34 +144,32 @@ def get_monthname(monthnumber):
 
 def format_telefonmodal(seminarobj):
     uid = seminarobj.UID()
-    htmlsnippet = f"""\
-<div class="modal fade" id="edi_{uid}" tabindex="-1" aria-labelledby="ModalLabel_{uid}" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="ModalLabel_{uid}">Anmeldung für: {seminarobj.title}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>Anmeldung via Telefon: <i class="bi bi-telephone"></i> <strong>{seminarobj.telefon}</strong></p>
-        <p>Ansprechperson: <strong>{seminarobj.kontakt}</strong></p>
-        <p class="small">Bitte halten Sie für die telefonische Anmeldung gegebenenfalls den gewünschten Veranstaltungsort und die Uhrzeit bereit.</p>
-      </div>
-    </div>
-  </div>
-</div>"""
+    htmlsnippet = (
+        f'<div class="modal fade" id="edi_{uid}" tabindex="-1" aria-labelledby="ModalLabel_{uid}" aria-hidden="true">\n'
+        f'  <div class="modal-dialog">\n'
+        f'    <div class="modal-content">\n'
+        f'      <div class="modal-header">\n'
+        f'        <h5 class="modal-title" id="ModalLabel_{uid}">Anmeldung für: {seminarobj.title}</h5>\n'
+        f'        <button type="button" class="close" data-dismiss="modal" aria-label="Close">\n'
+        f'          <span aria-hidden="true">&times;</span>\n'
+        f"        </button>\n"
+        f"      </div>\n"
+        f'      <div class="modal-body">\n'
+        f'        <p>Anmeldung via Telefon: <i class="bi bi-telephone"></i> <strong>{seminarobj.telefon}</strong></p>\n'
+        f"        <p>Ansprechperson: <strong>{seminarobj.kontakt}</strong></p>\n"
+        f'        <p class="small">Bitte halten Sie für die telefonische Anmeldung gegebenenfalls den gewünschten'
+        " Veranstaltungsort und die Uhrzeit bereit.</p>\n"
+        f"      </div>\n"
+        f"    </div>\n"
+        f"  </div>\n"
+        f"</div>\n"
+    )
     return htmlsnippet
 
 
 class Seminarliste(BrowserView):
     def __call__(self):
-        seminare = [
-            x
-            for x in self.context.getFolderContents()
-            if x.portal_type == "Seminarangebot"
-        ]
+        seminare = [x for x in self.context.getFolderContents() if x.portal_type == "Seminarangebot"]
         self.telefonnummern = []
         formatted_seminare = []
         for seminar in seminare:

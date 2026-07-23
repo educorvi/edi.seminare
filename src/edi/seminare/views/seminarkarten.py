@@ -15,13 +15,11 @@ class Seminarkarten(ErweiterteKurzfassung):
     def cardlist(self):
         rowclass = "row-cols-md-3"
         # Abwärtskompatibilität
-        if hasattr(self.context, "columns"):
-            if self.context.columns:
-                rowclass = f"row-cols-md-{self.context.columns}"
+        if hasattr(self.context, "columns") and self.context.columns:
+            rowclass = f"row-cols-md-{self.context.columns}"
         # Ende Abwärtskompatibilität
-        if hasattr(self.context, "cardscolumns"):
-            if self.context.cardscolumns:
-                rowclass = f"row-cols-md-{self.context.cardscolumns}"
+        if hasattr(self.context, "cardscolumns") and self.context.cardscolumns:
+            rowclass = f"row-cols-md-{self.context.cardscolumns}"
         self.rowclass = rowclass
         artikelliste = self.contentlist()
         artikel = self.add_seminare(artikelliste)
@@ -37,9 +35,7 @@ class Seminarkarten(ErweiterteKurzfassung):
             if obj.portal_type == "Seminarangebot":
                 seminartermine = format_seminartermine(obj.seminartermine)
             elif obj.portal_type == "Folder":
-                terminview = api.content.get_view(
-                    name="terminliste", context=obj, request=self.request
-                )
+                terminview = api.content.get_view(name="terminliste", context=obj, request=self.request)
                 seminartermine = terminview.query_seminare(obj)
             if len(seminartermine) > MAXLEN:
                 seminartermine = seminartermine[:MAXLEN]

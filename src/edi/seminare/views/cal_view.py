@@ -19,8 +19,8 @@ class CalView(BrowserView):
         index = self.request.get("index")
         try:
             index = int(index)
-        except:
-            print("Error")
+        except Exception as e:
+            print(f"Error in CalView converting index to int: {e}")
         title = self.context.title
         description = self.context.description
         url = self.context.absolute_url()
@@ -55,7 +55,5 @@ class CalView(BrowserView):
         s.seek(0)
 
         self.request.response.setHeader("Content-Type", "text/calendar")
-        self.request.response.setHeader(
-            "Content-Disposition", 'attachment; filename="seminar.ics"'
-        )
+        self.request.response.setHeader("Content-Disposition", 'attachment; filename="seminar.ics"')
         return s.read()

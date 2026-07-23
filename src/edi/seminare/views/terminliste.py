@@ -1,4 +1,3 @@
-
 from edi.seminare.views.seminarliste import format_seminartermine
 from edi.seminare.views.seminarliste import format_telefonmodal
 from edi.seminare.views.seminarliste import get_monthname
@@ -21,9 +20,8 @@ class Terminliste(BrowserView):
                 termin["title"] = seminarobj.title
                 termin["url"] = seminarobj.absolute_url()
                 formatted_termine.append(termin)
-            if seminarobj.anmeldung == "telefon":
-                if hasattr(self, "telefonnummern"):
-                    self.telefonnummern.append(format_telefonmodal(seminarobj))
+            if seminarobj.anmeldung == "telefon" and hasattr(self, "telefonnummern"):
+                self.telefonnummern.append(format_telefonmodal(seminarobj))
         formatted_termine.sort(key=lambda x: x["start"])
         return formatted_termine
 

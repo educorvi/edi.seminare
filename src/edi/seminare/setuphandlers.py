@@ -21,11 +21,11 @@ def post_install(context):
     typefolder = typesTool["Folder"]
     viewlist = typefolder.getProperty("view_methods", d=None)
     if "seminarliste" not in viewlist:
-        viewlist = viewlist + ("seminarliste",)
+        viewlist = (*viewlist, "seminarliste")
     if "terminliste" not in viewlist:
-        viewlist = viewlist + ("terminliste",)
+        viewlist = (*viewlist, "terminliste")
     if "seminarkarten" not in viewlist:
-        viewlist = viewlist + ("seminarkarten",)
+        viewlist = (*viewlist, "seminarkarten")
     typefolder.manage_changeProperties(view_methods=viewlist)
 
 

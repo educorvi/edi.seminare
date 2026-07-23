@@ -92,9 +92,7 @@ class ISeminarangebot(model.Schema):
         },
     )
 
-    extlink = schema.URI(
-        title="Verweis auf ein externes Anmeldeformular im Internet", required=False
-    )
+    extlink = schema.URI(title="Verweis auf ein externes Anmeldeformular im Internet", required=False)
 
     seminartermine = schema.List(
         title="Liste der Seminartermine",
@@ -117,19 +115,14 @@ class ISeminarangebot(model.Schema):
     def anmeldung_check(data):
         if data.anmeldung == "telefon":
             if not data.telefon:
-                raise Invalid(
-                    "Für eine Anmeldung per Telefon muss eine Telefonnummer angegeben werden."
-                )
+                raise Invalid("Für eine Anmeldung per Telefon muss eine Telefonnummer angegeben werden.")
         elif data.anmeldung == "link":
             if not data.formular:
                 raise Invalid(
                     "Für eine Anmeldung per Online-Formular muss ein Verweis auf ein Formular gesetzt werden."
                 )
-        elif data.anmeldung == "extlink":
-            if not data.extlink:
-                raise Invalid(
-                    "Für eine Anmeldung per externem Link muss ein externer Link eingetragen werden."
-                )
+        elif data.anmeldung == "extlink" and not data.extlink:
+            raise Invalid("Für eine Anmeldung per externem Link muss ein externer Link eingetragen werden.")
 
 
 @implementer(ISeminarangebot)
@@ -139,7 +132,5 @@ class Seminarangebot(Container):
     def get_cluster_content(self, request=None):
         if not request:
             request = getRequest()
-        view = ploneapi.content.get_view(
-            name="pure-seminarangebot", context=self, request=request
-        )
+        view = ploneapi.content.get_view(name="pure-seminarangebot", context=self, request=request)
         return view.__call__()
