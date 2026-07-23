@@ -11,21 +11,19 @@ import unittest
 
 
 class ViewsIntegrationTest(unittest.TestCase):
-
     layer = EDI_SEMINARE_INTEGRATION_TESTING
 
     def setUp(self):
-        self.portal = self.layer['portal']
-        setRoles(self.portal, TEST_USER_ID, ['Manager'])
-        api.content.create(self.portal, 'Folder', 'other-folder')
-        api.content.create(self.portal, 'Document', 'front-page')
+        self.portal = self.layer["portal"]
+        setRoles(self.portal, TEST_USER_ID, ["Manager"])
+        api.content.create(self.portal, "Folder", "other-folder")
+        api.content.create(self.portal, "Document", "front-page")
 
     def test_seminarliste_is_registered(self):
         view = getMultiAdapter(
-            (self.portal['other-folder'], self.portal.REQUEST),
-            name='seminarliste'
+            (self.portal["other-folder"], self.portal.REQUEST), name="seminarliste"
         )
-        self.assertTrue(view.__name__ == 'seminarliste')
+        self.assertTrue(view.__name__ == "seminarliste")
         # self.assertTrue(
         #     'Sample View' in view(),
         #     'Sample View is not found in seminarliste'
@@ -34,15 +32,13 @@ class ViewsIntegrationTest(unittest.TestCase):
     def test_seminarliste_not_matching_interface(self):
         with self.assertRaises(ComponentLookupError):
             getMultiAdapter(
-                (self.portal['front-page'], self.portal.REQUEST),
-                name='seminarliste'
+                (self.portal["front-page"], self.portal.REQUEST), name="seminarliste"
             )
 
 
 class ViewsFunctionalTest(unittest.TestCase):
-
     layer = EDI_SEMINARE_FUNCTIONAL_TESTING
 
     def setUp(self):
-        self.portal = self.layer['portal']
-        setRoles(self.portal, TEST_USER_ID, ['Manager'])
+        self.portal = self.layer["portal"]
+        setRoles(self.portal, TEST_USER_ID, ["Manager"])

@@ -1,29 +1,31 @@
 # -*- coding: utf-8 -*-
 
-from edi.seminare import _
-from Products.Five.browser import BrowserView
-from edi.seminare.views.seminarliste import format_seminartermine, get_monthname, format_telefonmodal
-from plone import api
 from datetime import datetime
+from edi.seminare import _
+from edi.seminare.views.seminarliste import format_seminartermine
+from edi.seminare.views.seminarliste import format_telefonmodal
+from edi.seminare.views.seminarliste import get_monthname
 from itertools import groupby
+from plone import api
+from Products.Five.browser import BrowserView
+
 
 class Terminliste(BrowserView):
-
     def query_seminare(self, obj=None):
         context = self.context
         if obj:
-            context=obj
+            context = obj
         seminare = api.content.find(context=context, portal_type="Seminarangebot")
         formatted_termine = []
         for seminar in seminare:
             seminarobj = seminar.getObject()
             terminliste = format_seminartermine(seminarobj)
             for termin in terminliste:
-                termin['title'] = seminarobj.title
-                termin['url'] = seminarobj.absolute_url()
+                termin["title"] = seminarobj.title
+                termin["url"] = seminarobj.absolute_url()
                 formatted_termine.append(termin)
-            if seminarobj.anmeldung == 'telefon':
-                if hasattr(self, 'telefonnummern'):
+            if seminarobj.anmeldung == "telefon":
+                if hasattr(self, "telefonnummern"):
                     self.telefonnummern.append(format_telefonmodal(seminarobj))
         formatted_termine.sort(key=lambda x: x["start"])
         return formatted_termine
@@ -50,9 +52,11 @@ class Terminliste(BrowserView):
         ]
         """
         self.telefonnummern = []
-        formatted_termine = self.query_seminare()       
+        formatted_termine = self.query_seminare()
         grouped_events = {}
-        for key, group in groupby(formatted_termine, key=lambda x: (x["start"].year, x["start"].month)):
+        for key, group in groupby(
+            formatted_termine, key=lambda x: (x["start"].year, x["start"].month)
+        ):
             grouped_events[key] = list(group)
         self.seminartermine = grouped_events
         return self.index()

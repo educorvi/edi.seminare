@@ -1,12 +1,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
-      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="context/main_template/macros/master"
       i18n:domain="edi.seminare"
-      metal:use-macro="context/main_template/macros/master">
-<body>
-  <metal:main fill-slot="main">
-    <tal:main-macro metal:define-macro="main">
+>
+  <body>
+    <metal:main fill-slot="main">
+      <tal:main-macro metal:define-macro="main">
 
         <div class="container">
 
@@ -14,72 +15,112 @@
 
             <div class="col-12 col-sm-9">
 
-              <h1 tal:content="context/title"/>
-              <span tal:content="structure provider:plone.belowcontenttitle" />
-              <p tal:condition="context/description" class="lead mt-5">
+              <h1 tal:content="context/title"></h1>
+              <span tal:content="structure provider:plone.belowcontenttitle"></span>
+              <p class="lead mt-5"
+                 tal:condition="context/description"
+              >
                 <span class="dot">
-                  <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+                  <svg xmlns="http://www.w3.org/2000/svg"
+                       viewbox="0 0 500 500"
+                  >
                     <defs></defs>
-                    <circle cx="250" cy="250" r="250" fill="#0063af"></circle>
+                    <circle cx="250"
+                            cy="250"
+                            fill="#0063af"
+                            r="250"
+                    ></circle>
                   </svg>
                 </span>
-                <span tal:replace="context/description"/>
+                <span tal:replace="context/description"></span>
               </p>
 
-              <div class="mb-4" tal:condition="context/text" tal:content="structure context/text/output"/>
+              <div class="mb-4"
+                   tal:condition="context/text"
+                   tal:content="structure context/text/output"
+              ></div>
 
               <h2 tal:condition="python: context.verweis or context.link">Weitere Informationen</h2>
 
               <section class="mb-4">
 
                 <p tal:condition="context/verweis">
-                  <a tal:attributes="href python:context.verweis.to_object.absolute_url()"
-                     tal:content="python:context.verweis.to_object.title"></a>
+                  <a tal:content="python:context.verweis.to_object.title"
+                     tal:attributes="
+                       href python:context.verweis.to_object.absolute_url();
+                     "
+                  ></a>
                 </p>
 
                 <p tal:condition="context/link">
-                  <a target="_blank" href="${context/link}">${context/link}</a>
+                  <a href="${context/link}"
+                     target="_blank"
+                  >${context/link}</a>
                 </p>
 
               </section>
 
-              <h2>Terminübersicht</h2>
+              <h2>Termin&uuml;bersicht</h2>
 
-	      <table style="width:100%;" class="table">
-	        <thead>
-		  <tr>
-		    <th style="width:70%">Termin</th>
-		    <th style="width:30%">Anmelden</th>
-		  </tr>
-	        </thead>
-		<tbody>
-		  <tr tal:repeat="date view/list_of_dates">
-		    <td><a href="${date/zeit/cal_url}" title="Seminartermin in Outloook übernehmen"><i class="bi bi-box-arrow-down"></i></a> 
-		         <span class="font-weight-bold">${date/ort}</span> ${date/zeit/day} <span tal:condition="date/zeit/time"> ${date/zeit/time}</span></td>
-		    <td><span tal:replace="structure date/places"></span></td>
-		  </tr>
-		</tbody>
+              <table class="table"
+                     style="width:100%;"
+              >
+                <thead>
+                  <tr>
+                    <th style="width:70%">Termin</th>
+                    <th style="width:30%">Anmelden</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr tal:repeat="date view/list_of_dates">
+                    <td><a href="${date/zeit/cal_url}"
+                         title="Seminartermin in Outloook übernehmen"
+                      ><i class="bi bi-box-arrow-down"></i></a>
+                      <span class="font-weight-bold">${date/ort}</span>
+                      ${date/zeit/day}
+                      <span tal:condition="date/zeit/time">
+                        ${date/zeit/time}</span></td>
+                    <td><span tal:replace="structure date/places"></span></td>
+                  </tr>
+                </tbody>
               </table>
 
-		<div class="modal fade" id="edi_${view/uid}" tabindex="-1" aria-labelledby="ModalLabel_${view/uid}" aria-hidden="true">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header">
-			<h5 class="modal-title" id="ModalLabel_${view/uid}">Anmeldung für: ${context/title}</h5>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			  <span aria-hidden="true">&times;</span>
-			</button>
-		      </div>
-		      <div class="modal-body">
-			<p>Anmeldung via Telefon: <i class="bi bi-telephone"></i> <strong>${context/telefon}</strong></p>
-			<p>Ansprechperson: <strong>${context/kontakt}</strong></p>
-			<p class="small">Bitte halten Sie für die telefonische Anmeldung gegebenenfalls den gewünschten Veranstaltungsort und die Uhrzeit bereit.</p>
-		      </div>
-		    </div>
-		  </div>
-		</div>
+              <div class="modal fade"
+                   id="edi_${view/uid}"
+                   aria-hidden="true"
+                   aria-labelledby="ModalLabel_${view/uid}"
+                   tabindex="-1"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title"
+                          id="ModalLabel_${view/uid}"
+                      >Anmeldung f&uuml;r: ${context/title}</h5>
+                      <button class="close"
+                              aria-label="Close"
+                              type="button"
+                              data-dismiss="modal"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <p>Anmeldung via Telefon:
+                        <i class="bi bi-telephone"></i>
+                        <strong>${context/telefon}</strong></p>
+                      <p>Ansprechperson:
+                        <strong>${context/kontakt}</strong></p>
+                      <p class="small">Bitte halten Sie f&uuml;r die telefonische Anmeldung gegebenenfalls den gew&uuml;nschten Veranstaltungsort und die Uhrzeit bereit.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-              <div class="mt-4" tal:condition="context/endtext" tal:content="structure context/endtext/output"/>
+              <div class="mt-4"
+                   tal:condition="context/endtext"
+                   tal:content="structure context/endtext/output"
+              ></div>
 
             </div>
 
@@ -92,41 +133,53 @@
                 <div class="card-body">
                   <p class="card-text"><strong>${context/kontakt}</strong></p>
                   <p tal:condition="context/email">
-                    <a href="mailto:${context/email}" class="card-link text-small">${context/email}</a>
+                    <a class="card-link text-small"
+                       href="mailto:${context/email}"
+                    >${context/email}</a>
                   </p>
                   <p tal:condition="context/telefon">
-		    <i class="mr-1 bi bi-telephone"></i>
-                    <a href="tel:${context/telefon}" class="card-link text-small">${context/telefon}</a>
+                    <i class="mr-1 bi bi-telephone"></i>
+                    <a class="card-link text-small"
+                       href="tel:${context/telefon}"
+                    >${context/telefon}</a>
                   </p>
 
-                  <p class="font-weight-bold" tal:condition="python: context.anmeldung=='keine'">
-                    Für eine Teilnahme ist keine Anmeldung erforderlich
+                  <p class="font-weight-bold"
+                     tal:condition="python: context.anmeldung=='keine'"
+                  >
+                    F&uuml;r eine Teilnahme ist keine Anmeldung erforderlich
                   </p>
 
-                  <p class="font-weight-bold" tal:condition="python: context.anmeldung=='email'">
+                  <p class="font-weight-bold"
+                     tal:condition="python: context.anmeldung=='email'"
+                  >
                     Anmeldung per E-Mail
                   </p>
 
-                  <p class="font-weight-bold" tal:condition="python: context.anmeldung=='telefon'">
+                  <p class="font-weight-bold"
+                     tal:condition="python: context.anmeldung=='telefon'"
+                  >
                     Anmeldung per Telefon
                   </p>
 
-                  <p class="font-weight-bold" tal:condition="python: context.anmeldung=='link'">
+                  <p class="font-weight-bold"
+                     tal:condition="python: context.anmeldung=='link'"
+                  >
                     Anmeldung per Online-Formular
                   </p>
 
                 </div><!--card-body-->
               </div><!--card-->
 
-              <div tal:replace="structure context/@@portlet-cards-view"/>
+              <div tal:replace="structure context/@@portlet-cards-view"></div>
 
             </div><!--col-->
-          
+
           </div><!--row-->
 
         </div><!--container-->
 
-    </tal:main-macro>  
-  </metal:main>
-</body>
+      </tal:main-macro>
+    </metal:main>
+  </body>
 </html>

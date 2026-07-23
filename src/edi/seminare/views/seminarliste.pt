@@ -1,12 +1,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
-      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="context/main_template/macros/master"
       i18n:domain="edi.seminare"
-      metal:use-macro="context/main_template/macros/master">
-<body>
-  <metal:main fill-slot="main">
-    <tal:main-macro metal:define-macro="main">
+>
+  <body>
+    <metal:main fill-slot="main">
+      <tal:main-macro metal:define-macro="main">
 
         <div class="container">
 
@@ -14,60 +15,86 @@
 
             <div class="col-12 col-sm-9">
 
-              <h1 tal:content="context/title"/>
-              <span tal:content="structure provider:plone.belowcontenttitle" />
-              <p tal:condition="context/description" class="lead mt-5">
+              <h1 tal:content="context/title"></h1>
+              <span tal:content="structure provider:plone.belowcontenttitle"></span>
+              <p class="lead mt-5"
+                 tal:condition="context/description"
+              >
                 <span class="dot">
-                  <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+                  <svg xmlns="http://www.w3.org/2000/svg"
+                       viewbox="0 0 500 500"
+                  >
                     <defs></defs>
-                    <circle cx="250" cy="250" r="250" fill="#0063af"></circle>
+                    <circle cx="250"
+                            cy="250"
+                            fill="#0063af"
+                            r="250"
+                    ></circle>
                   </svg>
                 </span>
-                <span tal:replace="context/description"/>
+                <span tal:replace="context/description"></span>
               </p>
 
-              <div class="mb-4" tal:condition="context/text|nothing" tal:content="structure context/text/output"/>
+              <div class="mb-4"
+                   tal:condition="context/text|nothing"
+                   tal:content="structure context/text/output"
+              ></div>
 
-              <div class="mb-5" tal:repeat="seminar view/seminare">
+              <div class="mb-5"
+                   tal:repeat="seminar view/seminare"
+              >
 
                 <h2><a href="${seminar/url}">${seminar/title}</a><h2>
 
-              <table style="width: 100%;" class="table" tal:define="list_of_dates seminar/list_of_dates">
-                <thead>
-		  <tr>
-                    <th stlye="width:30%;">Datum</th>
-                    <th style="width:20%">Beginn/Ende</th>
-                    <th style="width:25%">Ort</th>
-                    <th style="width:25%">Anmelden</th>
-		  </tr>
-                </thead>
-                <tbody>
-                  <tr tal:repeat="date list_of_dates">
-                    <td><a href="${date/zeit/cal_url}" title="Seminartermin in Outloook übernehmen"><i class="bi bi-box-arrow-down"></i></a> <small>${date/zeit/day}</small></td>
-                    <td><small tal:condition="date/zeit/time">${date/zeit/time}</small></td>
-                    <td><small>${date/ort}</small></td>
-		    <td><span tal:replace="structure date/places"/><td>
-                  </tr>
-                </tbody>
-              </table>
+                    <table class="table"
+                           style="width: 100%;"
+                           tal:define="
+                             list_of_dates seminar/list_of_dates;
+                           "
+                    >
+                      <thead>
+                        <tr>
+                          <th stlye="width:30%;">Datum</th>
+                          <th style="width:20%">Beginn/Ende</th>
+                          <th style="width:25%">Ort</th>
+                          <th style="width:25%">Anmelden</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr tal:repeat="date list_of_dates">
+                          <td><a href="${date/zeit/cal_url}"
+                               title="Seminartermin in Outloook übernehmen"
+                            ><i class="bi bi-box-arrow-down"></i></a>
+                            <small>${date/zeit/day}</small></td>
+                          <td><small tal:condition="date/zeit/time">${date/zeit/time}</small></td>
+                          <td><small>${date/ort}</small></td>
+                          <td><span tal:replace="structure date/places"></span><td>
+                            </td></td></tr>
+                      </tbody>
+                    </table>
 
-            </div>
+                  </h2></h2></div>
 
-	      <div tal:repeat="telefonnummer view/telefonnummern" tal:replace="structure telefonnummer"/>
+              <div tal:repeat="telefonnummer view/telefonnummern"
+                   tal:replace="structure telefonnummer"
+              ></div>
 
-              <div class="mb-4" tal:condition="context/schlusstext|nothing" tal:content="structure context/schlusstext/output"/>              
+              <div class="mb-4"
+                   tal:condition="context/schlusstext|nothing"
+                   tal:content="structure context/schlusstext/output"
+              ></div>
 
             </div><!-- col -->
 
             <div class="col-12 col-sm-3">
-              <div tal:replace="structure context/@@portlet-cards-view"/>
+              <div tal:replace="structure context/@@portlet-cards-view"></div>
             </div><!-- col -->
 
           </div><!-- row -->
         </div><!-- container -->
 
-    </tal:main-macro>
-  </metal:main>
+      </tal:main-macro>
+    </metal:main>
 
-</body>
+  </body>
 </html>

@@ -3,21 +3,35 @@
 <section tal:condition="python: context.verweis or context.link">
   <p class="card-body-desc"><strong>Weitere Informationen:</strong></p>
 
-  <p class="card-body-desc" tal:condition="context/verweis">
-    <a tal:attributes="href python:context.verweis.to_object.absolute_url()"
-      tal:content="python:context.verweis.to_object.title"></a>
+  <p class="card-body-desc"
+     tal:condition="context/verweis"
+  >
+    <a tal:content="python:context.verweis.to_object.title"
+       tal:attributes="
+         href python:context.verweis.to_object.absolute_url();
+       "
+    ></a>
   </p>
 
-  <p class="card-body-desc" tal:condition="context/link">
-    <a target="_blank" href="${context/link}">${context/link}</a>
+  <p class="card-body-desc"
+     tal:condition="context/link"
+  >
+    <a href="${context/link}"
+       target="_blank"
+    >${context/link}</a>
   </p>
 </section>
 
 <section>
-  <p class="card-body-desc"><strong>Terminübersicht:</strong></p>
+  <p class="card-body-desc"><strong>Termin&uuml;bersicht:</strong></p>
   <article tal:repeat="date view/list_of_dates">
-    <p class="card-body-desc"><a href="${date/zeit/cal_url}" title="Seminartermin in Outloook übernehmen"><i class="bi bi-box-arrow-down"></i></a>
-    <span>${date/ort}</span> ${date/zeit/day} <span tal:condition="date/zeit/time"> ${date/zeit/time}</span></p>
+    <p class="card-body-desc"><a href="${date/zeit/cal_url}"
+         title="Seminartermin in Outloook übernehmen"
+      ><i class="bi bi-box-arrow-down"></i></a>
+      <span>${date/ort}</span>
+      ${date/zeit/day}
+      <span tal:condition="date/zeit/time">
+        ${date/zeit/time}</span></p>
   </article>
 </section>
 

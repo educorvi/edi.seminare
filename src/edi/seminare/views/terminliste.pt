@@ -1,12 +1,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
-      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="context/main_template/macros/master"
       i18n:domain="edi.seminare"
-      metal:use-macro="context/main_template/macros/master">
-<body>
-  <metal:main fill-slot="main">
-    <tal:main-macro metal:define-macro="main">
+>
+  <body>
+    <metal:main fill-slot="main">
+      <tal:main-macro metal:define-macro="main">
 
         <div class="container">
 
@@ -14,25 +15,44 @@
 
             <div class="col-12 col-sm-9">
 
-              <h1 tal:content="context/title"/>
-              <span tal:content="structure provider:plone.belowcontenttitle" />
-              <p tal:condition="context/description" class="lead mt-5">
+              <h1 tal:content="context/title"></h1>
+              <span tal:content="structure provider:plone.belowcontenttitle"></span>
+              <p class="lead mt-5"
+                 tal:condition="context/description"
+              >
                 <span class="dot">
-                  <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+                  <svg xmlns="http://www.w3.org/2000/svg"
+                       viewbox="0 0 500 500"
+                  >
                     <defs></defs>
-                    <circle cx="250" cy="250" r="250" fill="#0063af"></circle>
+                    <circle cx="250"
+                            cy="250"
+                            fill="#0063af"
+                            r="250"
+                    ></circle>
                   </svg>
                 </span>
-                <span tal:replace="context/description"/>
+                <span tal:replace="context/description"></span>
               </p>
 
-              <div class="mb-4" tal:condition="context/text|nothing" tal:content="structure context/text/output"/>
+              <div class="mb-4"
+                   tal:condition="context/text|nothing"
+                   tal:content="structure context/text/output"
+              ></div>
 
-              <div class="mb-5" tal:repeat="group python:view.seminartermine.items()">
+              <div class="mb-5"
+                   tal:repeat="group python:view.seminartermine.items()"
+              >
 
-                <h2 tal:define="key python:group[0]" tal:content="python: str(view.get_month(key[1]))+' '+str(key[0])"></h2>
+                <h2 tal:define="
+                      key python:group[0];
+                    "
+                    tal:content="python: str(view.get_month(key[1]))+' '+str(key[0])"
+                ></h2>
 
-                <table style="width:100%;" class="table">
+                <table class="table"
+                       style="width:100%;"
+                >
                   <thead>
                     <tr>
                       <th style="width:20%;">Datum</th>
@@ -45,35 +65,42 @@
                   <tbody class="table-group-divider">
                     <tr tal:repeat="seminartermin python:group[1]">
                       <td>
-		        <a href="${seminartermin/zeit/cal_url}" title="Seminartermin in Outloook übernehmen"><i class="bi bi-box-arrow-down"></i></a>
+                        <a href="${seminartermin/zeit/cal_url}"
+                           title="Seminartermin in Outloook übernehmen"
+                        ><i class="bi bi-box-arrow-down"></i></a>
                         <small>${seminartermin/zeit/day}</small>
                       </td>
                       <td>
                         <small tal:condition="seminartermin/zeit/time">${seminartermin/zeit/time}&nbsp;Uhr</small>
                       </td>
                       <td><small>${seminartermin/ort}</small></td>
-                      <td><small><a href="${seminartermin/url}">${seminartermin/title}</small></td>
-                      <td><span tal:replace="structure seminartermin/places"/></td>
+                      <td><small><a href="${seminartermin/url}">${seminartermin/title}</a></small></td>
+                      <td><span tal:replace="structure seminartermin/places"></span></td>
                     </tr>
                   </tbody>
                 </table>
 
               </div><!-- Iterator Seminartermine -->
 
-              <div tal:repeat="telefonnummer view/telefonnummern" tal:replace="structure telefonnummer"/>
+              <div tal:repeat="telefonnummer view/telefonnummern"
+                   tal:replace="structure telefonnummer"
+              ></div>
 
-              <div class="mb-4" tal:condition="context/schlusstext|nothing" tal:content="structure context/schlusstext/output"/>              
+              <div class="mb-4"
+                   tal:condition="context/schlusstext|nothing"
+                   tal:content="structure context/schlusstext/output"
+              ></div>
 
             </div><!-- col -->
 
             <div class="col-12 col-sm-3">
-              <div tal:replace="structure context/@@portlet-cards-view"/>
+              <div tal:replace="structure context/@@portlet-cards-view"></div>
             </div><!-- col -->
 
           </div><!-- row -->
         </div><!-- container -->
 
-    </tal:main-macro>
-  </metal:main>
-</body>
+      </tal:main-macro>
+    </metal:main>
+  </body>
 </html>

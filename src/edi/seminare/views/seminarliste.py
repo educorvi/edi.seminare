@@ -1,71 +1,74 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 from edi.seminare import _
-from Products.Five.browser import BrowserView
 from plone import api
-from datetime import datetime
+from Products.Five.browser import BrowserView
+
 import regex
+
 
 def format_plaetze(seminarobj, location, day, time, places):
     """Helper Function to format free places for seminar"""
-    erg = 'Fehler'
+    erg = "Fehler"
     try:
         int(places)
     except:
-        return f'<a href={seminarobj.absolute_url()}>zum Seminarangebot</a>'
+        return f"<a href={seminarobj.absolute_url()}>zum Seminarangebot</a>"
     verfuegbarkeit = int(places)
     if verfuegbarkeit == -1:
-        erg = 'ausgebucht'
-        erg_class = 'danger'
+        erg = "ausgebucht"
+        erg_class = "danger"
     elif verfuegbarkeit == 0:
-        erg = 'Warteliste'
-        erg_class = 'primary'
+        erg = "Warteliste"
+        erg_class = "primary"
     elif verfuegbarkeit == 1000:
-        erg = 'freie Plätze'
-        erg_class = 'success'
+        erg = "freie Plätze"
+        erg_class = "success"
     else:
-        erg = f'noch {verfuegbarkeit} Plätze'
-        erg_class = 'success'
+        erg = f"noch {verfuegbarkeit} Plätze"
+        erg_class = "success"
 
-    if seminarobj.anmeldung == 'keine':
+    if seminarobj.anmeldung == "keine":
         link = '<small class="text-success"><strong>nicht erforderlich</strong></small>'
         if is_url(location):
-            erg = 'beitreten'
-            btnclass = 'btn btn-success'
+            erg = "beitreten"
+            btnclass = "btn btn-success"
             link = f'<a role="button" style="width:140px" class="{btnclass}" href="{location}">{erg}</a>'
     elif verfuegbarkeit == -1:
         link = '<small class="text-danger"><strong>ausgebucht</strong></small>'
     else:
         title = seminarobj.title
-        btnclass = f'btn btn-{erg_class}'
-        if seminarobj.anmeldung == 'email':
+        btnclass = f"btn btn-{erg_class}"
+        if seminarobj.anmeldung == "email":
             email = seminarobj.email
             icon = '<i class="bi bi-envelope"></i>'
-            url = f'mailto:{email}?subject=Anmeldung: {title} {day}'
+            url = f"mailto:{email}?subject=Anmeldung: {title} {day}"
             if time:
-                url = f'mailto:{email}?subject=Anmeldung: {title} {day} {time}'
+                url = f"mailto:{email}?subject=Anmeldung: {title} {day} {time}"
             link = f'<a role="button" style="width:140px" class="{btnclass}" href="{url}">{erg}</a>'
-        elif seminarobj.anmeldung == 'link':
+        elif seminarobj.anmeldung == "link":
             icon = '<i text-white class="bi bi-file-check"></i>'
             try:
                 url = seminarobj.formular.to_object.absolute_url()
             except:
-                url = ''
+                url = ""
             link = f'<a role="button" style="width:140px" class="{btnclass}" href="{url}">{erg}</a>'
-        elif seminarobj.anmeldung == 'extlink':
+        elif seminarobj.anmeldung == "extlink":
             icon = '<i text-white class="bi bi-file-check-fill"></i>'
             url = seminarobj.extlink
             link = f'<a target="_blank" role="button" style="width:140px" class="{btnclass}" href="{url}">{erg}</a>'
-        elif seminarobj.anmeldung == 'telefon':
+        elif seminarobj.anmeldung == "telefon":
             icon = '<i class="bi bi-telephone"></i>'
             link = f'<button type="button" style="width:140px" class="{btnclass}" data-toggle="modal" data-target="#edi_{seminarobj.UID()}">{erg}</button>'
     return link
 
+
 def is_url(location):
     """Helper Function to check if it is a Videocall URL"""
     # This regular expression roughly checks for (http/s):// and a domain name with optional path/query.
-    url_pattern = regex.compile(r'\bhttps?://[^\s]+?\?.+\b')
+    url_pattern = regex.compile(r"\bhttps?://[^\s]+?\?.+\b")
     return regex.match(url_pattern, location) is not None
+
 
 def format_seminartermine(seminarobj):
     """Helper Function to make datetime-objects human readable in seminarevent context"""
@@ -73,51 +76,68 @@ def format_seminartermine(seminarobj):
     formatted_events = []
     for termin in seminartermine:
         event = {}
-        location = termin['location']
+        location = termin["location"]
         if is_url(location):
-            location = 'Online'
-        event['ort'] = location
+            location = "Online"
+        event["ort"] = location
         try:
-            start = datetime.strptime(termin['start'], '%Y-%m-%dT%H:%M')
+            start = datetime.strptime(termin["start"], "%Y-%m-%dT%H:%M")
         except:
-            start = termin['start']
-        event['start'] = start
+            start = termin["start"]
+        event["start"] = start
         try:
-            end = datetime.strptime(termin['end'], '%Y-%m-%dT%H:%M')
+            end = datetime.strptime(termin["end"], "%Y-%m-%dT%H:%M")
         except:
-            end = termin['end']
-        event['end'] = end
-        if (start.day,start.month) == (end.day,end.month):
-            formatted_day = start.strftime('%d.%m.%Y')
-            formatted_time = start.strftime('%H:%M-') + end.strftime('%H:%M')
+            end = termin["end"]
+        event["end"] = end
+        if (start.day, start.month) == (end.day, end.month):
+            formatted_day = start.strftime("%d.%m.%Y")
+            formatted_time = start.strftime("%H:%M-") + end.strftime("%H:%M")
         else:
-            formatted_day = start.strftime('%d.%m.- ') + end.strftime('%d.%m.%Y')
-            formatted_time = start.strftime('%H:%M-') + end.strftime('%H:%M')
-        if (start.hour,start.minute) == (0,0) and (start.hour,start.minute) == (end.hour,end.minute):
+            formatted_day = start.strftime("%d.%m.- ") + end.strftime("%d.%m.%Y")
+            formatted_time = start.strftime("%H:%M-") + end.strftime("%H:%M")
+        if (start.hour, start.minute) == (0, 0) and (start.hour, start.minute) == (
+            end.hour,
+            end.minute,
+        ):
             formatted_time = False
         cal_url = f"{seminarobj.absolute_url()}/@@cal-view?index={seminartermine.index(termin)}"
-        event['zeit'] = {'day':formatted_day, 'time':formatted_time, 'cal_url':cal_url}
-        event['places'] = format_plaetze(seminarobj, termin['location'], formatted_day, formatted_time, termin['places'])
+        event["zeit"] = {
+            "day": formatted_day,
+            "time": formatted_time,
+            "cal_url": cal_url,
+        }
+        event["places"] = format_plaetze(
+            seminarobj,
+            termin["location"],
+            formatted_day,
+            formatted_time,
+            termin["places"],
+        )
         formatted_events.append(event)
     formatted_events.sort(key=lambda x: x["start"])
     now = datetime.now()
-    formatted_events = [termin for termin in formatted_events if termin['end'] > now]
+    formatted_events = [termin for termin in formatted_events if termin["end"] > now]
     return formatted_events
 
+
 def get_monthname(monthnumber):
-    monthnames = {1:'Januar',
-                   2:'Februar',
-                   3:'März',
-                   4:'April',
-                   5:'Mai',
-                   6:'Juni',
-                   7:'Juli',
-                   8:'August',
-                   9:'September',
-                   10:'Oktober',
-                   11:'November',
-                   12:'Dezember'}
+    monthnames = {
+        1: "Januar",
+        2: "Februar",
+        3: "März",
+        4: "April",
+        5: "Mai",
+        6: "Juni",
+        7: "Juli",
+        8: "August",
+        9: "September",
+        10: "Oktober",
+        11: "November",
+        12: "Dezember",
+    }
     return monthnames.get(monthnumber)
+
 
 def format_telefonmodal(seminarobj):
     uid = seminarobj.UID()
@@ -141,20 +161,24 @@ def format_telefonmodal(seminarobj):
 </div>"""
     return htmlsnippet
 
-class Seminarliste(BrowserView):
 
+class Seminarliste(BrowserView):
     def __call__(self):
-        seminare = [x for x in self.context.getFolderContents() if x.portal_type == 'Seminarangebot']
+        seminare = [
+            x
+            for x in self.context.getFolderContents()
+            if x.portal_type == "Seminarangebot"
+        ]
         self.telefonnummern = []
         formatted_seminare = []
         for seminar in seminare:
             seminarevent = {}
             seminarobj = seminar.getObject()
-            seminarevent['title'] = seminarobj.title
-            seminarevent['url'] = seminarobj.absolute_url()
-            seminarevent['list_of_dates'] = format_seminartermine(seminarobj)
+            seminarevent["title"] = seminarobj.title
+            seminarevent["url"] = seminarobj.absolute_url()
+            seminarevent["list_of_dates"] = format_seminartermine(seminarobj)
             formatted_seminare.append(seminarevent)
-            if seminarobj.anmeldung == 'telefon':
+            if seminarobj.anmeldung == "telefon":
                 self.telefonnummern.append(format_telefonmodal(seminarobj))
         self.seminare = formatted_seminare
         return self.index()

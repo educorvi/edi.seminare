@@ -2,75 +2,77 @@
     xmlns="http://namespaces.zope.org/zope"
     xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:plone="http://namespaces.plone.org/plone"
-    i18n_domain="edi.seminare">
+    i18n_domain="edi.seminare"
+    >
 
   <include package="plone.app.contentmenu" />
 
   <browser:page
-    name="pure-seminarangebot"
-    for="edi.seminare.content.seminarangebot.ISeminarangebot"
-    class=".pure_seminarangebot.PureSeminarangebot"
-    template="pure_seminarangebot.pt"
-    permission="zope2.View"
-    />
+      name="pure-seminarangebot"
+      for="edi.seminare.content.seminarangebot.ISeminarangebot"
+      class=".pure_seminarangebot.PureSeminarangebot"
+      template="pure_seminarangebot.pt"
+      permission="zope2.View"
+      />
 
   <browser:page
-    name="cal-view"
-    for="edi.seminare.content.seminarangebot.ISeminarangebot"
-    class=".cal_view.CalView"
-    permission="zope2.View"
-    />
+      name="cal-view"
+      for="edi.seminare.content.seminarangebot.ISeminarangebot"
+      class=".cal_view.CalView"
+      permission="zope2.View"
+      />
 
   <browser:page
-    name="seminarkarten"
-    for="Products.CMFCore.interfaces.IFolderish"
-    class=".seminarkarten.Seminarkarten"
-    template="seminarkarten.pt"
-    permission="zope2.View"
-    />
+      name="seminarkarten"
+      for="Products.CMFCore.interfaces.IFolderish"
+      class=".seminarkarten.Seminarkarten"
+      template="seminarkarten.pt"
+      permission="zope2.View"
+      />
 
   <browser:page
-    name="seminarliste"
-    for="Products.CMFCore.interfaces.IFolderish"
-    class=".seminarliste.Seminarliste"
-    template="seminarliste.pt"
-    permission="zope2.View"
-    />
+      name="seminarliste"
+      for="Products.CMFCore.interfaces.IFolderish"
+      class=".seminarliste.Seminarliste"
+      template="seminarliste.pt"
+      permission="zope2.View"
+      />
 
   <browser:page
-    name="terminliste"
-    for="Products.CMFCore.interfaces.IFolderish"
-    class=".terminliste.Terminliste"
-    template="terminliste.pt"
-    permission="zope2.View"
-    />
+      name="terminliste"
+      for="Products.CMFCore.interfaces.IFolderish"
+      class=".terminliste.Terminliste"
+      template="terminliste.pt"
+      permission="zope2.View"
+      />
 
   <browser:page
-    name="seminarangebot"
-    for="edi.seminare.content.seminarangebot.ISeminarangebot"
-    class=".seminarangebot.Seminarangebot"
-    template="seminarangebot.pt"
-    permission="zope2.View"
-    />
+      name="seminarangebot"
+      for="edi.seminare.content.seminarangebot.ISeminarangebot"
+      class=".seminarangebot.Seminarangebot"
+      template="seminarangebot.pt"
+      permission="zope2.View"
+      />
 
   <browser:menuItems
-     for="*"
-     menu="plone_displayviews">
-     <browser:menuItem
-       title="Seminare nach Themen"
-       action="seminarliste"
-       description="ABC-Ansicht fuer Plone"
-     />
-     <browser:menuItem
-       title="Seminare nach Terminen"
-       action="terminliste"
-       description="ABC-Ansicht fuer Plone"
-     />
-     <browser:menuItem
-       title="Seminare nach Unterordnern"
-       action="seminarkarten"
-       description="ABC-Ansicht fuer Plone"
-     />
+      menu="plone_displayviews"
+      for="*"
+      >
+    <browser:menuItem
+        title="Seminare nach Themen"
+        description="ABC-Ansicht fuer Plone"
+        action="seminarliste"
+        />
+    <browser:menuItem
+        title="Seminare nach Terminen"
+        description="ABC-Ansicht fuer Plone"
+        action="terminliste"
+        />
+    <browser:menuItem
+        title="Seminare nach Unterordnern"
+        description="ABC-Ansicht fuer Plone"
+        action="seminarkarten"
+        />
   </browser:menuItems>
 
 
