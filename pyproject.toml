@@ -30,6 +30,7 @@ dependencies = [
     "collective.z3cform.datagridfield",
     "regex",
     "ics",
+    "nva.kurzfassung",
 ]
 
 [project.optional-dependencies]
