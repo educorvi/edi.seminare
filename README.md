@@ -1,11 +1,8 @@
-============
-edi.seminare
-============
+# edi.seminare
 
 Artikeltyp und Views für die Präsentation interner Aus- und Weiterbildungsangebote im Intranet
 
-Features
---------
+## Features
 
 - Artikeltyp Seminarangebot
 - Einzelansicht Seminar mit Portlet Ansprechpartner
@@ -16,8 +13,7 @@ Features
 - Möglichkeit zum Hinterlegen von VK-Terminen mit Button zum Beitreten
 
 
-Documentation
--------------
+## Documentation
 
 Eine vollständige Online-Dokumentation für Endbenutzer kann über kurse.uv-kooperation.de nach vorheriger
 Registrierung eingesehen werden:
@@ -25,37 +21,23 @@ Registrierung eingesehen werden:
 https://kurse.uv-kooperation.de/online-kurse/cms-plone/artikeltypen-nach-mass/seminare-anlegen
 
 
-Installation
-------------
+## Installation
 
-Install edi.seminare by adding it to your buildout::
-
-    [buildout]
-
-    ...
-
-    eggs =
-        edi.seminare
+- add it to your `dependencies` in `pyproject.toml` and in `mx.ini`
 
 
-and then running ``bin/buildout``
-
-
-Contribute
-----------
+## Contribute
 
 - Issue Tracker: https://github.com/educorvi/edi.seminare/issues
 - Source Code: https://github.com/educorvi/edi.seminare
 
 
-Support
--------
+## Support
 
 If you are having issues, please let us know.
 We have a mailing list located at: info@educorvi.de
 
 
-License
--------
+## License
 
 The project is licensed under the GPLv2.

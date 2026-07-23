@@ -1,4 +1,4 @@
-edi.seminare Copyright 2024, Lars Walther
+edi.seminare Copyright 2026, Lars Walther
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License version 2
