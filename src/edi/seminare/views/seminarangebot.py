@@ -1,6 +1,4 @@
-# -*- coding: utf-8 -*-
 
-from edi.seminare import _
 from edi.seminare.views.seminarliste import format_seminartermine
 from Products.Five.browser import BrowserView
 

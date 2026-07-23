@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
 from datetime import datetime
-from edi.seminare import _
-from plone import api
 from Products.Five.browser import BrowserView
 
 import regex

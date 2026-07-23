@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-from edi.seminare.testing import EDI_SEMINARE_ACCEPTANCE_TESTING  # noqa: E501
+from edi.seminare.testing import EDI_SEMINARE_ACCEPTANCE_TESTING
 from plone.app.testing import ROBOT_TEST_LEVEL
 from plone.testing import layered
 

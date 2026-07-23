@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from collective.z3cform.datagridfield.datagridfield import DataGridFieldFactory
 from collective.z3cform.datagridfield.row import DictRow
 from plone import api as ploneapi
@@ -10,7 +9,6 @@ from plone.schema import Email
 
 # from plone.namedfile import field as namedfile
 from plone.supermodel import model
-from plone.supermodel.directives import fieldset
 from z3c.relationfield.schema import RelationChoice
 
 # from z3c.form.browser.radio import RadioFieldWidget

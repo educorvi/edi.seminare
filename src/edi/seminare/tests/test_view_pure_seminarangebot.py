@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from edi.seminare.testing import EDI_SEMINARE_FUNCTIONAL_TESTING
 from edi.seminare.testing import EDI_SEMINARE_INTEGRATION_TESTING
 from plone import api

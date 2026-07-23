@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from edi.seminare.views.seminarliste import format_seminartermine
 from nva.kurzfassung.views.erweiterte_kurzfassung import ErweiterteKurzfassung
 from plone import api

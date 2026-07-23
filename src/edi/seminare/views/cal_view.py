@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-from datetime import datetime
-from datetime import timedelta
 from edi.seminare.views.seminarliste import is_url
 from ics import Calendar
 from ics import Event
@@ -9,7 +6,6 @@ from Products.Five.browser import BrowserView
 from zope.interface import implementer
 from zope.interface import Interface
 
-import datetime
 import pytz
 
 

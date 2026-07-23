@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
 
-from datetime import datetime
-from edi.seminare import _
 from edi.seminare.views.seminarliste import format_seminartermine
 from edi.seminare.views.seminarliste import format_telefonmodal
 from edi.seminare.views.seminarliste import get_monthname
