@@ -20,17 +20,13 @@ class ViewsIntegrationTest(unittest.TestCase):
         api.content.create(self.portal, "Document", "front-page")
 
     def test_cal_view_is_registered(self):
-        view = getMultiAdapter(
-            (self.portal["other-folder"], self.portal.REQUEST), name="cal-view"
-        )
+        view = getMultiAdapter((self.portal["other-folder"], self.portal.REQUEST), name="cal-view")
         self.assertTrue(ICalView.providedBy(view))
 
     def test_cal_view_not_matching_interface(self):
         view_found = True
         try:
-            view = getMultiAdapter(
-                (self.portal["front-page"], self.portal.REQUEST), name="cal-view"
-            )
+            view = getMultiAdapter((self.portal["front-page"], self.portal.REQUEST), name="cal-view")
         except ComponentLookupError:
             view_found = False
         else:

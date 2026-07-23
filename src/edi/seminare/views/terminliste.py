@@ -49,9 +49,7 @@ class Terminliste(BrowserView):
         self.telefonnummern = []
         formatted_termine = self.query_seminare()
         grouped_events = {}
-        for key, group in groupby(
-            formatted_termine, key=lambda x: (x["start"].year, x["start"].month)
-        ):
+        for key, group in groupby(formatted_termine, key=lambda x: (x["start"].year, x["start"].month)):
             grouped_events[key] = list(group)
         self.seminartermine = grouped_events
         return self.index()

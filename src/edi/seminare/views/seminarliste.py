@@ -1,9 +1,8 @@
 from datetime import datetime
+from edi.seminare import logger
 from Products.Five.browser import BrowserView
 
 import regex
-
-from edi.seminare import logger
 
 
 def format_plaetze(seminarobj, location, day, time, places):  # noqa: C901

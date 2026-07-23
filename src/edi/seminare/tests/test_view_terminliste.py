@@ -19,9 +19,7 @@ class ViewsIntegrationTest(unittest.TestCase):
         api.content.create(self.portal, "Document", "front-page")
 
     def test_terminliste_is_registered(self):
-        view = getMultiAdapter(
-            (self.portal["other-folder"], self.portal.REQUEST), name="terminliste"
-        )
+        view = getMultiAdapter((self.portal["other-folder"], self.portal.REQUEST), name="terminliste")
         self.assertTrue(view.__name__ == "terminliste")
         # self.assertTrue(
         #     'Sample View' in view(),
@@ -30,9 +28,7 @@ class ViewsIntegrationTest(unittest.TestCase):
 
     def test_terminliste_not_matching_interface(self):
         with self.assertRaises(ComponentLookupError):
-            getMultiAdapter(
-                (self.portal["front-page"], self.portal.REQUEST), name="terminliste"
-            )
+            getMultiAdapter((self.portal["front-page"], self.portal.REQUEST), name="terminliste")
 
 
 class ViewsFunctionalTest(unittest.TestCase):

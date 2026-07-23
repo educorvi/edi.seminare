@@ -1,4 +1,3 @@
-
 from edi.seminare.views.seminarliste import format_seminartermine
 from Products.Five.browser import BrowserView
 
