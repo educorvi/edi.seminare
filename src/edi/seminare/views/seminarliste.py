@@ -3,6 +3,7 @@ from edi.seminare import logger
 from Products.Five.browser import BrowserView
 
 import regex
+from plone import api
 
 
 def format_plaetze(seminarobj, location, day, time, places):  # noqa: C901
@@ -47,7 +48,8 @@ def format_plaetze(seminarobj, location, day, time, places):  # noqa: C901
             link = f'<a role="button" style="width:140px" class="{btnclass}" href="{url}">{erg}</a>'
         elif seminarobj.anmeldung == "link":
             try:
-                url = seminarobj.formular.to_object.absolute_url()
+                formular = api.relation.get(source=seminarobj, relationship="formular")
+                url = formular.to_object.absolute_url()
             except Exception as e:
                 logger.error(
                     f"Error getting formular URL for seminar {seminarobj.title}: {e}"

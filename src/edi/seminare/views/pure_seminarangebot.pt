@@ -6,9 +6,9 @@
   <p class="card-body-desc"
      tal:condition="context/verweis"
   >
-    <a tal:content="python:context.verweis.to_object.title"
+    <a tal:content="view/verweis/title"
        tal:attributes="
-         href python:context.verweis.to_object.absolute_url();
+         href python:view.verweis.absolute_url();
        "
     ></a>
   </p>
