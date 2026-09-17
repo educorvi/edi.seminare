@@ -1,4 +1,3 @@
-from Products.CMFCore.utils import getToolByName
 from plone.base.interfaces.installable import INonInstallable
 from zope.interface import implementer
 

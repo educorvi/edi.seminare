@@ -65,7 +65,5 @@ class CalView(BrowserView):
         s.seek(0)
 
         self.request.response.setHeader("Content-Type", "text/calendar")
-        self.request.response.setHeader(
-            "Content-Disposition", 'attachment; filename="seminar.ics"'
-        )
+        self.request.response.setHeader("Content-Disposition", 'attachment; filename="seminar.ics"')
         return s.read()

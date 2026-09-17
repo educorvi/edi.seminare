@@ -1,9 +1,9 @@
 from datetime import datetime
 from edi.seminare import logger
+from plone import api
 from Products.Five.browser import BrowserView
 
 import regex
-from plone import api
 
 
 def format_plaetze(seminarobj, location, day, time, places):  # noqa: C901
@@ -51,9 +51,7 @@ def format_plaetze(seminarobj, location, day, time, places):  # noqa: C901
                 formular = api.relation.get(source=seminarobj, relationship="formular")
                 url = formular.to_object.absolute_url()
             except Exception as e:
-                logger.error(
-                    f"Error getting formular URL for seminar {seminarobj.title}: {e}"
-                )
+                logger.error(f"Error getting formular URL for seminar {seminarobj.title}: {e}")
                 url = ""
             link = f'<a role="button" style="width:140px" class="{btnclass}" href="{url}">{erg}</a>'
         elif seminarobj.anmeldung == "extlink":
@@ -165,9 +163,7 @@ def format_telefonmodal(seminarobj):
 class Seminarliste(BrowserView):
     def __call__(self):
         seminare = [
-            x
-            for x in self.context.restrictedTraverse("@@contentlisting")()
-            if x.portal_type == "Seminarangebot"
+            x for x in self.context.restrictedTraverse("@@contentlisting")() if x.portal_type == "Seminarangebot"
         ]
         self.telefonnummern = []
         formatted_seminare = []

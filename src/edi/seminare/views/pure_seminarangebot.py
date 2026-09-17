@@ -1,7 +1,5 @@
 from edi.seminare.views.seminarangebot import Seminarangebot
 
-from plone import api
-
 
 # from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
