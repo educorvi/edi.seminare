@@ -31,6 +31,7 @@ dependencies = [
     "regex",
     "ics",
     "nva.kurzfassung",
+    "nva.viewlets",
 ]
 
 [project.optional-dependencies]

@@ -4,5 +4,7 @@
   <dependencies>
     <dependency>profile-plone.app.dexterity:default</dependency>
     <dependency>profile-collective.z3cform.datagridfield:default</dependency>
+    <dependency>profile-nva.viewlets:default</dependency>
+    <!-- for nva.contentcards viewlet -->
   </dependencies>
 </metadata>
