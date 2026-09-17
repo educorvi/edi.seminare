@@ -19,6 +19,7 @@
       name="cal-view"
       for="edi.seminare.content.seminarangebot.ISeminarangebot"
       class=".cal_view.CalView"
+      template="cal_view.pt"
       permission="zope2.View"
       />
 
@@ -72,6 +73,11 @@
         title="Seminare nach Unterordnern"
         description="ABC-Ansicht fuer Plone"
         action="seminarkarten"
+        />
+    <browser:menuItem
+        title="Seminarangebot"
+        description="Ansicht für ein Seminarangebot"
+        action="seminarangebot"
         />
   </browser:menuItems>
 

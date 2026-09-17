@@ -49,7 +49,9 @@ def format_plaetze(seminarobj, location, day, time, places):  # noqa: C901
             try:
                 url = seminarobj.formular.to_object.absolute_url()
             except Exception as e:
-                logger.error(f"Error getting formular URL for seminar {seminarobj.title}: {e}")
+                logger.error(
+                    f"Error getting formular URL for seminar {seminarobj.title}: {e}"
+                )
                 url = ""
             link = f'<a role="button" style="width:140px" class="{btnclass}" href="{url}">{erg}</a>'
         elif seminarobj.anmeldung == "extlink":
@@ -80,17 +82,9 @@ def format_seminartermine(seminarobj):
         if is_url(location):
             location = "Online"
         event["ort"] = location
-        try:
-            start = datetime.strptime(termin["start"], "%Y-%m-%dT%H:%M")
-        except Exception as e:
-            logger.error(f"Error parsing start date for seminar {seminarobj.title}: {e}")
-            start = termin["start"]
+        start = termin["start"]
         event["start"] = start
-        try:
-            end = datetime.strptime(termin["end"], "%Y-%m-%dT%H:%M")
-        except Exception as e:
-            logger.error(f"Error parsing end date for seminar {seminarobj.title}: {e}")
-            end = termin["end"]
+        end = termin["end"]
         event["end"] = end
         if (start.day, start.month) == (end.day, end.month):
             formatted_day = start.strftime("%d.%m.%Y")
@@ -169,7 +163,9 @@ def format_telefonmodal(seminarobj):
 class Seminarliste(BrowserView):
     def __call__(self):
         seminare = [
-            x for x in self.context.restrictedTravers("@@contentlisting")() if x.portal_type == "Seminarangebot"
+            x
+            for x in self.context.restrictedTraverse("@@contentlisting")()
+            if x.portal_type == "Seminarangebot"
         ]
         self.telefonnummern = []
         formatted_seminare = []

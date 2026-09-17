@@ -114,7 +114,6 @@
                            tal:repeat="termin item/seminare"
                         >
                           ${termin/zeit/day} | ${termin/ort}<br />
-                          <a href="${termin/url}">${termin/title}</a>
                         </p>
                       </section>
                       <a href="${item/url}"

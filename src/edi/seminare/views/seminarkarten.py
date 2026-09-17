@@ -33,9 +33,11 @@ class Seminarkarten(ErweiterteKurzfassung):
             seminartermine = []
             obj = api.content.get(UID=artikel["uid"])
             if obj.portal_type == "Seminarangebot":
-                seminartermine = format_seminartermine(obj.seminartermine)
+                seminartermine = format_seminartermine(obj)
             elif obj.portal_type == "Folder":
-                terminview = api.content.get_view(name="terminliste", context=obj, request=self.request)
+                terminview = api.content.get_view(
+                    name="terminliste", context=obj, request=self.request
+                )
                 seminartermine = terminview.query_seminare(obj)
             if len(seminartermine) > MAXLEN:
                 seminartermine = seminartermine[:MAXLEN]

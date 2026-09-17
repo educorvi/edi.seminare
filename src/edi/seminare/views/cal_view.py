@@ -17,14 +17,24 @@ class ICalView(Interface):
 class CalView(BrowserView):
     def __call__(self):
         index = self.request.get("index")
+        if not index:
+            self.message = "<p>No index provided</p>"
+            return self.index()
         try:
             index = int(index)
         except Exception as e:
             print(f"Error in CalView converting index to int: {e}")
+            self.message = "<p>Invalid index provided</p>"
+            return self.index()
         title = self.context.title
         description = self.context.description
         url = self.context.absolute_url()
-        termin = self.context.seminartermine[index]
+        try:
+            termin = self.context.seminartermine[index]
+        except Exception as e:
+            print(f"Error in CalView accessing termin: {e}")
+            self.message = "<p>Index provided is out of range</p>"
+            return self.index()
         start = termin["start"]
         end = termin["end"]
         location = termin["location"]
@@ -55,5 +65,7 @@ class CalView(BrowserView):
         s.seek(0)
 
         self.request.response.setHeader("Content-Type", "text/calendar")
-        self.request.response.setHeader("Content-Disposition", 'attachment; filename="seminar.ics"')
+        self.request.response.setHeader(
+            "Content-Disposition", 'attachment; filename="seminar.ics"'
+        )
         return s.read()
