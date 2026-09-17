@@ -1,9 +1,9 @@
 from collective.z3cform.datagridfield.datagridfield import DataGridFieldFactory
 from collective.z3cform.datagridfield.row import DictRow
-from plone import api as ploneapi
+from plone import api as api
 from plone.app.textfield import RichText
-from plone.app.z3cform.widget import RelatedItemsFieldWidget
-from plone.autoform import directives
+from plone.app.z3cform.widgets.contentbrowser import ContentBrowserFieldWidget
+from plone.autoform.directives import widget
 from plone.dexterity.content import Container
 from plone.schema import Email
 
@@ -63,12 +63,6 @@ class ISeminarangebot(model.Schema):
         required=False,
     )
 
-    # directives.widget("verweis",
-    #    RelatedItemsFieldWidget,
-    #    pattern_options={
-    #        "selectableTypes": ["Document", "Event"],
-    #    })
-
     link = schema.URI(title="Link zu einem Artikel im Internet", required=False)
 
     anmeldung = schema.Choice(
@@ -84,15 +78,17 @@ class ISeminarangebot(model.Schema):
         required=False,
     )
 
-    directives.widget(
+    widget(
         "formular",
-        RelatedItemsFieldWidget,
+        ContentBrowserFieldWidget,
         pattern_options={
             "selectableTypes": ["EasyForm"],
         },
     )
 
-    extlink = schema.URI(title="Verweis auf ein externes Anmeldeformular im Internet", required=False)
+    extlink = schema.URI(
+        title="Verweis auf ein externes Anmeldeformular im Internet", required=False
+    )
 
     seminartermine = schema.List(
         title="Liste der Seminartermine",
@@ -102,8 +98,7 @@ class ISeminarangebot(model.Schema):
         ),
         required=False,
     )
-
-    directives.widget("seminartermine", DataGridFieldFactory)
+    widget(seminartermine=DataGridFieldFactory)
 
     endtext = RichText(
         title="Schlusstext zum Seminarangebot",
@@ -115,14 +110,18 @@ class ISeminarangebot(model.Schema):
     def anmeldung_check(data):
         if data.anmeldung == "telefon":
             if not data.telefon:
-                raise Invalid("Für eine Anmeldung per Telefon muss eine Telefonnummer angegeben werden.")
+                raise Invalid(
+                    "Für eine Anmeldung per Telefon muss eine Telefonnummer angegeben werden."
+                )
         elif data.anmeldung == "link":
             if not data.formular:
                 raise Invalid(
                     "Für eine Anmeldung per Online-Formular muss ein Verweis auf ein Formular gesetzt werden."
                 )
         elif data.anmeldung == "extlink" and not data.extlink:
-            raise Invalid("Für eine Anmeldung per externem Link muss ein externer Link eingetragen werden.")
+            raise Invalid(
+                "Für eine Anmeldung per externem Link muss ein externer Link eingetragen werden."
+            )
 
 
 @implementer(ISeminarangebot)
@@ -132,5 +131,7 @@ class Seminarangebot(Container):
     def get_cluster_content(self, request=None):
         if not request:
             request = getRequest()
-        view = ploneapi.content.get_view(name="pure-seminarangebot", context=self, request=request)
+        view = api.content.get_view(
+            name="pure-seminarangebot", context=self, request=request
+        )
         return view.__call__()

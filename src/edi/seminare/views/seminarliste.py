@@ -168,7 +168,9 @@ def format_telefonmodal(seminarobj):
 
 class Seminarliste(BrowserView):
     def __call__(self):
-        seminare = [x for x in self.context.getFolderContents() if x.portal_type == "Seminarangebot"]
+        seminare = [
+            x for x in self.context.restrictedTravers("@@contentlisting")() if x.portal_type == "Seminarangebot"
+        ]
         self.telefonnummern = []
         formatted_seminare = []
         for seminar in seminare:
