@@ -16,18 +16,6 @@ def post_install(context):
     """Post install script"""
     # Do something at the end of the installation of this package.
 
-    typesTool = getToolByName(context, "portal_types")
-
-    typefolder = typesTool["Folder"]
-    viewlist = typefolder.getProperty("view_methods", d=None)
-    if "seminarliste" not in viewlist:
-        viewlist = (*viewlist, "seminarliste")
-    if "terminliste" not in viewlist:
-        viewlist = (*viewlist, "terminliste")
-    if "seminarkarten" not in viewlist:
-        viewlist = (*viewlist, "seminarkarten")
-    typefolder.manage_changeProperties(view_methods=viewlist)
-
 
 def uninstall(context):
     """Uninstall script"""
